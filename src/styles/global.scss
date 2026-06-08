@@ -1,0 +1,84 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+/* ---- Reset ------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(#{$header-h} + #{$space-md});
+}
+
+@include motion-safe {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  background-color: $color-bg;
+  color: $color-text;
+  font-family: $font-body;
+  font-size: $fs-body;
+  line-height: $lh-body;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  // subtle warm paper grain via two faint radial washes — no image needed
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(184, 92, 56, 0.05), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(184, 92, 56, 0.04), transparent 55%);
+  background-attachment: fixed;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: $font-display;
+  font-weight: 600;
+  line-height: $lh-snug;
+  color: $color-text;
+}
+
+a {
+  color: $color-accent-strong;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: $color-accent-soft;
+  color: $color-text;
+}
+
+:focus-visible {
+  @include focus-ring;
+}
+
+/* ====================================================================
+   DESKTOP SCROLL-SNAP — the one "special touch".
+   Pure CSS, no JS scroll hijacking. `proximity` keeps it gentle: it
+   only nudges a banner into place when you're already near it, never
+   traps the wheel. Disabled on touch (no hover) and when the user
+   prefers reduced motion. The matching `scroll-snap-align` lives on
+   the project banners (ProjectCard.module.scss).
+   To remove the effect entirely, delete this one block.
+   ==================================================================== */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (min-width: $bp-lg) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+}

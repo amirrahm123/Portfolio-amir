@@ -1,0 +1,46 @@
+@use 'variables' as *;
+
+// Min-width media query from a named breakpoint token.
+@mixin respond-to($bp) {
+  @if $bp == sm {
+    @media (min-width: $bp-sm) { @content; }
+  } @else if $bp == md {
+    @media (min-width: $bp-md) { @content; }
+  } @else if $bp == lg {
+    @media (min-width: $bp-lg) { @content; }
+  } @else if $bp == xl {
+    @media (min-width: $bp-xl) { @content; }
+  } @else {
+    @error "Unknown breakpoint: #{$bp}";
+  }
+}
+
+// Centered content column with responsive gutters.
+@mixin container($width: $maxw) {
+  width: 100%;
+  max-width: $width;
+  margin-inline: auto;
+  padding-inline: $gutter;
+}
+
+// Tracked, uppercase eyebrow label.
+@mixin eyebrow {
+  font-family: $font-body;
+  font-size: $fs-eyebrow;
+  font-weight: 600;
+  letter-spacing: $tracking-eyebrow;
+  text-transform: uppercase;
+  color: $color-text-faint;
+}
+
+// Consistent, visible keyboard focus ring.
+@mixin focus-ring {
+  outline: 2px solid $color-accent-strong;
+  outline-offset: 3px;
+  border-radius: $radius-sm;
+}
+
+// Only animate when the user hasn't asked to reduce motion.
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) { @content; }
+}

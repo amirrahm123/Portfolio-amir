@@ -1,0 +1,83 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.contact {
+  padding-top: $space-section;
+  padding-bottom: $space-2xl;
+}
+
+.inner {
+  @include container;
+}
+
+.head {
+  max-width: $maxw-narrow;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: $space-sm;
+}
+
+.heading {
+  font-size: $fs-display;
+  letter-spacing: -0.025em;
+  line-height: $lh-tight;
+}
+
+.lead {
+  margin-top: $space-md;
+  font-size: $fs-lead;
+  color: $color-text-soft;
+  max-width: 46ch;
+}
+
+.links {
+  list-style: none;
+  margin-top: $space-xl;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-md $space-2xl;
+  padding-bottom: $space-2xl;
+  border-bottom: 1px solid $color-hairline;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: $font-display;
+  font-size: $fs-h3;
+  font-weight: 600;
+  color: $color-text;
+  transition: color $dur-fast $ease-out, gap $dur-fast $ease-out;
+
+  &:hover {
+    color: $color-accent-strong;
+    gap: 0.6em;
+  }
+}
+
+.linkPlaceholder {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-family: $font-display;
+  font-size: $fs-h3;
+  font-weight: 600;
+  color: $color-text-faint;
+  cursor: default;
+
+  em {
+    font-family: $font-body;
+    font-style: italic;
+    font-size: $fs-meta;
+    font-weight: 500;
+  }
+}
+
+.copyright {
+  margin-top: $space-xl;
+  font-size: $fs-meta;
+  color: $color-text-faint;
+}

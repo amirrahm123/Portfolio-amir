@@ -1,0 +1,91 @@
+// =============================================================
+//  Design tokens — the single source of truth for the whole site.
+//  Every color / size / radius / type-step below is a token; no
+//  component hard-codes a raw value.
+// =============================================================
+
+// ---- Color: warm paper palette ------------------------------
+$color-bg:          #FAF8F2; // warm off-white / paper
+$color-bg-elevated: #FFFDF8; // very slightly lifted (header blur, pills)
+$color-text:        #1A1714; // warm near-black
+$color-text-soft:   #514B43; // muted body copy
+$color-text-faint:  #8A8278; // captions, meta, eyebrows
+$color-hairline:    rgba(26, 23, 20, 0.10); // hairline borders
+
+// ---- The ONE accent -----------------------------------------
+// Active accent: muted clay / terracotta.
+$color-accent:        #B85C38; // links, dot, swipe base
+$color-accent-strong: #9E4A28; // text-on-paper variant (stronger contrast)
+$color-accent-soft:   rgba(184, 92, 56, 0.16); // hero highlight-swipe
+$color-accent-tint:   rgba(184, 92, 56, 0.08); // pill hover wash
+
+// ---- Alternate accent (deep forest green) -------------------
+// To switch the whole site to green, swap the four values above
+// for these four and rebuild — nothing else needs to change.
+//   $color-accent:        #3E6B4F;
+//   $color-accent-strong: #2F5640;
+//   $color-accent-soft:   rgba(62, 107, 79, 0.16);
+//   $color-accent-tint:   rgba(62, 107, 79, 0.08);
+
+// ---- Per-project banner tints (muted, harmonious) -----------
+$tint-sand:   #F1E8DC; // warm sand
+$tint-sage:   #E8ECE2; // soft sage
+$tint-greige: #ECE5DB; // warm greige
+$tint-blush:  #F1E7E2; // soft blush clay
+
+// ---- Typography ---------------------------------------------
+$font-display: 'Fraunces', 'Georgia', serif;        // characterful display
+$font-body:    'Hanken Grotesk', system-ui, sans-serif; // clean grotesque
+
+// Fluid type scale (mobile-first, clamps up on large screens)
+$fs-eyebrow:  0.8125rem; // 13px — tracked label
+$fs-meta:     0.875rem;  // 14px
+$fs-body:     1.0625rem; // 17px
+$fs-lead:     clamp(1.125rem, 0.9rem + 1vw, 1.375rem);
+$fs-h3:       clamp(1.375rem, 1.1rem + 1.2vw, 1.75rem);
+$fs-h2:       clamp(2rem, 1.3rem + 3vw, 3.25rem);
+$fs-display:  clamp(2.75rem, 1.2rem + 7.5vw, 6rem);
+
+$lh-tight:  1.04;
+$lh-snug:   1.18;
+$lh-body:   1.6;
+$tracking-eyebrow: 0.14em;
+
+// ---- Spacing scale ------------------------------------------
+$space-2xs: 0.25rem;
+$space-xs:  0.5rem;
+$space-sm:  0.75rem;
+$space-md:  1rem;
+$space-lg:  1.5rem;
+$space-xl:  2.5rem;
+$space-2xl: 4rem;
+$space-3xl: 6rem;
+$space-section: clamp(4.5rem, 3rem + 6vw, 8rem); // vertical section rhythm
+
+// ---- Radii --------------------------------------------------
+$radius-sm:   8px;
+$radius-md:   14px;
+$radius-lg:   22px;
+$radius-xl:   28px;
+$radius-pill: 999px;
+
+// ---- Layout -------------------------------------------------
+$maxw:        1080px;
+$maxw-narrow: 760px;
+$gutter:      clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+$header-h:    64px;
+
+// ---- Soft elevation (no heavy shadows) ----------------------
+$shadow-soft:  0 1px 2px rgba(26, 23, 20, 0.04), 0 8px 24px rgba(26, 23, 20, 0.06);
+$shadow-float: 0 2px 6px rgba(26, 23, 20, 0.05), 0 18px 46px rgba(26, 23, 20, 0.10);
+
+// ---- Motion -------------------------------------------------
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$dur-fast: 160ms;
+$dur-med:  280ms;
+
+// ---- Breakpoints (px values for the respond-to mixin) -------
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;

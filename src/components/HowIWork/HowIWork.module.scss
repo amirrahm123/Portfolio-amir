@@ -1,0 +1,62 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.section {
+  padding-block: $space-section;
+}
+
+.inner {
+  @include container;
+}
+
+.head {
+  margin-bottom: clamp($space-xl, 4vw, $space-2xl);
+  max-width: $maxw-narrow;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: $space-sm;
+}
+
+.heading {
+  font-size: $fs-h2;
+  letter-spacing: -0.02em;
+  line-height: $lh-snug;
+}
+
+.steps {
+  list-style: none;
+  display: grid;
+  gap: clamp($space-lg, 3vw, $space-2xl);
+  grid-template-columns: 1fr;
+
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+  padding-top: $space-lg;
+  border-top: 1px solid $color-hairline;
+}
+
+.num {
+  font-family: $font-display;
+  font-size: $fs-h3;
+  font-weight: 600;
+  color: $color-accent-strong;
+}
+
+.stepTitle {
+  font-size: $fs-h3;
+  letter-spacing: -0.01em;
+}
+
+.stepBody {
+  color: $color-text-soft;
+  font-size: $fs-body;
+}

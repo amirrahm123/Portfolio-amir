@@ -1,0 +1,24 @@
+@use './styles/variables' as *;
+@use './styles/mixins' as *;
+
+.main {
+  display: block;
+}
+
+// Accessible skip link — hidden until focused.
+.skipLink {
+  position: absolute;
+  left: $space-md;
+  top: -100%;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  background: $color-text;
+  color: $color-bg;
+  border-radius: $radius-sm;
+  font-weight: 600;
+  transition: top $dur-fast $ease-out;
+
+  &:focus {
+    top: $space-md;
+  }
+}

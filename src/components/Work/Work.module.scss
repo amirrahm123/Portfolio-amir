@@ -1,0 +1,32 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.work {
+  padding-block: $space-section;
+}
+
+.inner {
+  @include container;
+}
+
+.head {
+  margin-bottom: clamp($space-xl, 4vw, $space-2xl);
+  max-width: $maxw-narrow;
+}
+
+.eyebrow {
+  @include eyebrow;
+  margin-bottom: $space-sm;
+}
+
+.heading {
+  font-size: $fs-h2;
+  letter-spacing: -0.02em;
+  line-height: $lh-snug;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp($space-xl, 4vw, $space-2xl);
+}

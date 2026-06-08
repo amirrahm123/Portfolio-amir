@@ -1,0 +1,201 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.banner {
+  // each banner carries its own soft, solid tint
+  border-radius: $radius-xl;
+  padding: clamp($space-lg, 4vw, $space-2xl);
+  display: grid;
+  gap: clamp($space-lg, 4vw, $space-2xl);
+  align-items: center;
+  grid-template-columns: 1fr;
+  border: 1px solid $color-hairline;
+
+  // Desktop scroll-snap target. Inert unless <html> opts in (see global.scss),
+  // so it costs nothing on mobile / reduced-motion.
+  scroll-snap-align: center;
+  scroll-margin-top: calc(#{$header-h} + #{$space-lg});
+
+  @include respond-to(lg) {
+    grid-template-columns: 1.05fr 1fr;
+    padding: clamp($space-2xl, 4vw, $space-3xl);
+
+    // alternate: image to the right on odd banners
+    &[data-reverse='true'] .media {
+      order: 2;
+    }
+  }
+}
+
+// ---- Per-project tints (sourced from tokens) ----------------
+.banner[data-tint='sand']   { background: $tint-sand; }
+.banner[data-tint='sage']   { background: $tint-sage; }
+.banner[data-tint='greige'] { background: $tint-greige; }
+.banner[data-tint='blush']  { background: $tint-blush; }
+
+// ---- Media / screenshot -------------------------------------
+.media {
+  // a floating screen mockup
+  perspective: 1000px;
+}
+
+%screen {
+  width: 100%;
+  aspect-ratio: 1280 / 860;
+  border-radius: $radius-md;
+  box-shadow: $shadow-float;
+  background: $color-bg-elevated;
+}
+
+.image {
+  @extend %screen;
+  object-fit: cover;
+  transition: transform $dur-med $ease-out, box-shadow $dur-med $ease-out;
+
+  @include motion-safe {
+    .banner:hover & {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 6px 14px rgba(26, 23, 20, 0.08), 0 28px 60px rgba(26, 23, 20, 0.14);
+    }
+  }
+}
+
+.placeholder {
+  @extend %screen;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2xs;
+  border: 1px dashed rgba(26, 23, 20, 0.16);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+  transition: transform $dur-med $ease-out;
+
+  @include motion-safe {
+    .banner:hover & {
+      transform: translateY(-6px) scale(1.015);
+    }
+  }
+}
+
+.placeholderName {
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: $fs-h3;
+  color: $color-text;
+  text-align: center;
+  padding-inline: $space-md;
+}
+
+.placeholderHint {
+  @include eyebrow;
+  font-size: 0.7rem;
+}
+
+// ---- Text body ----------------------------------------------
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-md;
+}
+
+.kicker {
+  @include eyebrow;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2xs;
+  color: $color-accent-strong;
+}
+
+.flagshipMark {
+  font-size: 0.85em;
+}
+
+.title {
+  font-size: $fs-h2;
+  letter-spacing: -0.02em;
+  line-height: $lh-tight;
+}
+
+.desc {
+  color: $color-text-soft;
+  font-size: $fs-body;
+  max-width: 52ch;
+}
+
+.stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2xs $space-xs;
+  margin-top: $space-2xs;
+}
+
+.tech {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: $color-text-soft;
+  padding: 0.28rem 0.6rem;
+  border-radius: $radius-pill;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid $color-hairline;
+}
+
+.footer {
+  margin-top: $space-xs;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-md $space-lg;
+}
+
+.statusTag {
+  font-size: $fs-meta;
+  font-weight: 600;
+  color: $color-text;
+  padding: 0.35rem 0.7rem;
+  border-radius: $radius-sm;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid $color-hairline;
+}
+
+.links {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-lg;
+}
+
+%link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: $fs-body;
+  font-weight: 600;
+  transition: color $dur-fast $ease-out, gap $dur-fast $ease-out;
+
+  &:hover { gap: 0.55em; }
+}
+
+.linkPrimary {
+  @extend %link;
+  color: $color-accent-strong;
+}
+
+.linkSecondary {
+  @extend %link;
+  color: $color-text;
+  &:hover { color: $color-accent-strong; }
+}
+
+.arrow {
+  transition: transform $dur-fast $ease-out;
+}
+
+.privateLabel {
+  font-size: $fs-meta;
+  font-weight: 500;
+  font-style: italic;
+  color: $color-text-faint;
+}
