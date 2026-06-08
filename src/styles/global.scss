@@ -67,18 +67,3 @@ button {
 :focus-visible {
   @include focus-ring;
 }
-
-/* ====================================================================
-   DESKTOP SCROLL-SNAP — the one "special touch".
-   Pure CSS, no JS scroll hijacking. `proximity` keeps it gentle: it
-   only nudges a banner into place when you're already near it, never
-   traps the wheel. Disabled on touch (no hover) and when the user
-   prefers reduced motion. The matching `scroll-snap-align` lives on
-   the project banners (ProjectCard.module.scss).
-   To remove the effect entirely, delete this one block.
-   ==================================================================== */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (min-width: $bp-lg) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-}

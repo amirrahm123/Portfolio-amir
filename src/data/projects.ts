@@ -31,7 +31,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'amirballbot',
-    title: 'AmirBallBot',
+    title: 'Amirballbot',
     kicker: 'Flagship · AI product',
     status: 'In active development',
     description:

@@ -11,11 +11,6 @@
   grid-template-columns: 1fr;
   border: 1px solid $color-hairline;
 
-  // Desktop scroll-snap target. Inert unless <html> opts in (see global.scss),
-  // so it costs nothing on mobile / reduced-motion.
-  scroll-snap-align: center;
-  scroll-margin-top: calc(#{$header-h} + #{$space-lg});
-
   @include respond-to(lg) {
     grid-template-columns: 1.05fr 1fr;
     padding: clamp($space-2xl, 4vw, $space-3xl);
