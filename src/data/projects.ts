@@ -69,8 +69,8 @@ export const projects: Project[] = [
     stack: ['Next.js', 'TypeScript', 'Supabase/Postgres', 'Tailwind', 'Framer Motion', 'Twilio', 'PWA'],
     liveUrl: null, // uses two labeled liveLinks (Booking + Admin) instead
     liveLinks: [
-      { label: 'Live — Booking', url: 'https://arikapp.vercel.app/' },
-      { label: 'Live — Admin', url: 'https://arikapp.vercel.app/admin/login' },
+      { label: 'Live — Booking', url: 'https://arikapp-nu.vercel.app/' },
+      { label: 'Live — Admin', url: 'https://arikapp-nu.vercel.app/admin/login' },
     ],
     codeUrl: 'https://github.com/amirrahm123/arikapp',
     credentials:
