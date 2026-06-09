@@ -13,7 +13,8 @@ export interface Project {
   status: string;
   description: string;
   stack: string[];
-  liveUrl: string;
+  /** null = no public live link; the card omits the "Live" link entirely */
+  liveUrl: string | null;
   /** null = private repo; the card shows a muted "Private" label instead of a link */
   codeUrl: string | null;
   /**
@@ -37,7 +38,7 @@ export const projects: Project[] = [
     description:
       'An AI basketball game-film analysis platform for coaches. Upload a game and it detects plays, reads jersey numbers, and returns structured Hebrew coaching notes — feeding a video editor with timestamped AI notes, an AI coach chat, and opponent scouting reports. Orchestrates three AI models (Gemini vision + Claude for language) across a multi-pass pipeline with a worker pool, dedup, and a coach-correction feedback loop. Built solo.',
     stack: ['Node/Express', 'TypeScript', 'MongoDB', 'Gemini', 'Claude', 'ffmpeg'],
-    liveUrl: 'https://amirballbot.vercel.app/',
+    liveUrl: null, // no public live link — code only
     codeUrl: 'https://github.com/amirrahm123/amirballbot',
     image: 'amirballbot',
     tint: 'sand',

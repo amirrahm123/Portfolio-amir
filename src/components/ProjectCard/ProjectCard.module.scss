@@ -34,17 +34,19 @@
   perspective: 1000px;
 }
 
-%screen {
+// The frame defines the box: a fixed 1280/860 landscape aspect ratio and
+// `overflow: hidden`, so whatever sits inside is clipped to the rounded
+// corners and can NEVER spill past the container. Putting the aspect-ratio
+// on this plain wrapper (rather than the replaced <img>, whose intrinsic
+// dimensions fight the constraint) is what keeps the screenshot contained.
+.frame {
+  position: relative;
   width: 100%;
   aspect-ratio: 1280 / 860;
   border-radius: $radius-md;
+  overflow: hidden;
   box-shadow: $shadow-float;
   background: $color-bg-elevated;
-}
-
-.image {
-  @extend %screen;
-  object-fit: cover;
   transition: transform $dur-med $ease-out, box-shadow $dur-med $ease-out;
 
   @include motion-safe {
@@ -55,8 +57,19 @@
   }
 }
 
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  // Fill the frame and crop overflow; anchor to the top so the most
+  // important part of each screenshot (the header/nav) is what shows.
+  object-fit: cover;
+  object-position: top;
+}
+
 .placeholder {
-  @extend %screen;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,13 +78,6 @@
   border: 1px dashed rgba(26, 23, 20, 0.16);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-  transition: transform $dur-med $ease-out;
-
-  @include motion-safe {
-    .banner:hover & {
-      transform: translateY(-6px) scale(1.015);
-    }
-  }
 }
 
 .placeholderName {
@@ -106,6 +112,19 @@
 
 .flagshipMark {
   font-size: 0.85em;
+}
+
+// Status label near the title — a small muted pill (no arrow) so it reads as
+// a label, not a clickable link like the Live ↗ / Code ↗ row at the bottom.
+.statusTag {
+  align-self: flex-start;
+  font-size: $fs-meta;
+  font-weight: 500;
+  color: $color-text-soft;
+  padding: 0.2rem 0.6rem;
+  border-radius: $radius-pill;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid $color-hairline;
 }
 
 .title {
@@ -144,16 +163,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: $space-md $space-lg;
-}
-
-.statusTag {
-  font-size: $fs-meta;
-  font-weight: 600;
-  color: $color-text;
-  padding: 0.35rem 0.7rem;
-  border-radius: $radius-sm;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid $color-hairline;
 }
 
 .links {

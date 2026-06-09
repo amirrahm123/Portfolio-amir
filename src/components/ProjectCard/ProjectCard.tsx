@@ -56,6 +56,38 @@ function ProjectMedia({ project }: { project: Project }) {
   );
 }
 
+function ProjectLinks({ project }: { project: Project }) {
+  return (
+    <div className={styles.links}>
+      {project.liveUrl && (
+        <a
+          className={styles.linkPrimary}
+          href={project.liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open the live ${project.title} site in a new tab`}
+        >
+          Live <ArrowIcon />
+        </a>
+      )}
+
+      {project.codeUrl ? (
+        <a
+          className={styles.linkSecondary}
+          href={project.codeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View the ${project.title} source code on GitHub in a new tab`}
+        >
+          Code <ArrowIcon />
+        </a>
+      ) : (
+        <span className={styles.privateLabel}>Private — client work</span>
+      )}
+    </div>
+  );
+}
+
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const reduce = useReducedMotion();
 
@@ -70,7 +102,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={inViewport}
     >
       <div className={styles.media}>
-        <ProjectMedia project={project} />
+        <div className={styles.frame}>
+          <ProjectMedia project={project} />
+        </div>
       </div>
 
       <div className={styles.body}>
@@ -78,6 +112,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
           {project.flagship && <span className={styles.flagshipMark} aria-hidden="true">★</span>}
           {project.kicker}
         </p>
+
+        {/* Status label — only when it adds info beyond the links. A "Live"
+            status is redundant with the Live ↗ link, so it's omitted. */}
+        {project.status.toLowerCase() !== 'live' && (
+          <span className={styles.statusTag}>{project.status}</span>
+        )}
 
         <h3 className={styles.title}>{project.title}</h3>
 
@@ -92,33 +132,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         </ul>
 
         <div className={styles.footer}>
-          <span className={styles.statusTag}>{project.status}</span>
-
-          <div className={styles.links}>
-            <a
-              className={styles.linkPrimary}
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Open the live ${project.title} site in a new tab`}
-            >
-              Live <ArrowIcon />
-            </a>
-
-            {project.codeUrl ? (
-              <a
-                className={styles.linkSecondary}
-                href={project.codeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View the ${project.title} source code on GitHub in a new tab`}
-              >
-                Code <ArrowIcon />
-              </a>
-            ) : (
-              <span className={styles.privateLabel}>Private — client work</span>
-            )}
-          </div>
+          <ProjectLinks project={project} />
         </div>
       </div>
     </motion.article>
