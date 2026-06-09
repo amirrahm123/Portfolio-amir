@@ -56,20 +56,59 @@ function ProjectMedia({ project }: { project: Project }) {
   );
 }
 
+/** The card's primary live URL: the first labeled live link (e.g. ArikApp's
+ *  Booking page) or the single `liveUrl`, or null if the card has no live site. */
+function primaryLiveUrl(project: Project): string | null {
+  return project.liveLinks?.[0]?.url ?? project.liveUrl ?? null;
+}
+
+/** The screenshot, wrapped in a link to the primary live site when one exists.
+ *  Cards with no live URL (e.g. Amirballbot) stay a plain, non-clickable frame. */
+function ProjectMediaFrame({ project }: { project: Project }) {
+  const liveUrl = primaryLiveUrl(project);
+
+  if (!liveUrl) {
+    return (
+      <div className={styles.frame}>
+        <ProjectMedia project={project} />
+      </div>
+    );
+  }
+
+  return (
+    <a
+      className={`${styles.frame} ${styles.frameLink}`}
+      href={liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open the live ${project.title} site in a new tab`}
+    >
+      <ProjectMedia project={project} />
+    </a>
+  );
+}
+
 function ProjectLinks({ project }: { project: Project }) {
+  // Normalize to a list: a card may expose several labeled live links
+  // (e.g. ArikApp's Booking + Admin) or the common single `liveUrl`.
+  const liveLinks =
+    project.liveLinks ??
+    (project.liveUrl ? [{ label: 'Live', url: project.liveUrl }] : []);
+
   return (
     <div className={styles.links}>
-      {project.liveUrl && (
+      {liveLinks.map((link) => (
         <a
+          key={link.url}
           className={styles.linkPrimary}
-          href={project.liveUrl}
+          href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Open the live ${project.title} site in a new tab`}
+          aria-label={`Open ${project.title} — ${link.label} in a new tab`}
         >
-          Live <ArrowIcon />
+          {link.label} <ArrowIcon />
         </a>
-      )}
+      ))}
 
       {project.codeUrl ? (
         <a
@@ -102,9 +141,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={inViewport}
     >
       <div className={styles.media}>
-        <div className={styles.frame}>
-          <ProjectMedia project={project} />
-        </div>
+        <ProjectMediaFrame project={project} />
       </div>
 
       <div className={styles.body}>
@@ -133,6 +170,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
         <div className={styles.footer}>
           <ProjectLinks project={project} />
+          {project.credentials && (
+            <p className={styles.credentials}>{project.credentials}</p>
+          )}
         </div>
       </div>
     </motion.article>

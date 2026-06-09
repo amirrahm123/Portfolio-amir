@@ -3,6 +3,13 @@
 
 export type TintKey = 'sand' | 'sage' | 'greige' | 'blush';
 
+/** A labeled live link — used when a project exposes more than one live URL
+ *  (e.g. ArikApp's public Booking page + its Admin demo). */
+export interface LiveLink {
+  label: string;
+  url: string;
+}
+
 export interface Project {
   /** stable key for React lists + anchor ids */
   id: string;
@@ -15,8 +22,16 @@ export interface Project {
   stack: string[];
   /** null = no public live link; the card omits the "Live" link entirely */
   liveUrl: string | null;
+  /**
+   * Optional multiple labeled live links (e.g. Booking + Admin). When present,
+   * these are rendered instead of the single `liveUrl`. Leave undefined for the
+   * common one-live-link case and just use `liveUrl`.
+   */
+  liveLinks?: LiveLink[];
   /** null = private repo; the card shows a muted "Private" label instead of a link */
   codeUrl: string | null;
+  /** optional small muted help line shown under the links (e.g. demo credentials) */
+  credentials?: string;
   /**
    * Image basename in src/assets/projects (no extension).
    * The resolver matches any extension, so dropping in
@@ -52,8 +67,14 @@ export const projects: Project[] = [
     description:
       'A two-sided appointment-booking PWA for a barbershop: a public self-booking page and a full admin panel for the barber. Real database, auth, and realtime updates — live availability, double-booking guards, a dashboard with revenue KPIs and charts, a realtime calendar, PDF receipts, WhatsApp notifications, and a daily reminder cron. Installable as a PWA. Built solo.',
     stack: ['Next.js', 'TypeScript', 'Supabase/Postgres', 'Tailwind', 'Framer Motion', 'Twilio', 'PWA'],
-    liveUrl: 'https://arikapp-nu.vercel.app/',
+    liveUrl: null, // uses two labeled liveLinks (Booking + Admin) instead
+    liveLinks: [
+      { label: 'Live — Booking', url: 'https://arikapp.vercel.app/' },
+      { label: 'Live — Admin', url: 'https://arikapp.vercel.app/admin/login' },
+    ],
     codeUrl: 'https://github.com/amirrahm123/arikapp',
+    credentials:
+      'Admin demo login — email: demo@arikapp.app · password: demo1234 (view-only)',
     image: 'arikapp',
     tint: 'sage',
   },
