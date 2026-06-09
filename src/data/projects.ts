@@ -33,6 +33,12 @@ export interface Project {
   /** optional small muted help line shown under the links (e.g. demo credentials) */
   credentials?: string;
   /**
+   * Optional explicit URL for the clickable screenshot. When set, the image
+   * opens this instead of the card's primary live URL — e.g. ArikApp's image
+   * deep-links to the admin demo while its first text link stays the booking page.
+   */
+  imageUrl?: string;
+  /**
    * Image basename in src/assets/projects (no extension).
    * The resolver matches any extension, so dropping in
    * `amirballbot.png` OR `amirballbot.gif` just works — no code change.
@@ -75,6 +81,7 @@ export const projects: Project[] = [
     codeUrl: 'https://github.com/amirrahm123/arikapp',
     credentials:
       'Admin demo login — email: demo@arikapp.app · password: demo1234 (view-only)',
+    imageUrl: 'https://arikapp-nu.vercel.app/admin/login', // image deep-links to the admin demo
     image: 'arikapp',
     tint: 'sage',
   },

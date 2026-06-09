@@ -62,10 +62,16 @@ function primaryLiveUrl(project: Project): string | null {
   return project.liveLinks?.[0]?.url ?? project.liveUrl ?? null;
 }
 
-/** The screenshot, wrapped in a link to the primary live site when one exists.
+/** Where the clickable screenshot points: an explicit `imageUrl` override when
+ *  set (e.g. ArikApp → admin demo), otherwise the card's primary live URL. */
+function imageLinkUrl(project: Project): string | null {
+  return project.imageUrl ?? primaryLiveUrl(project);
+}
+
+/** The screenshot, wrapped in a link to the live site when one exists.
  *  Cards with no live URL (e.g. Amirballbot) stay a plain, non-clickable frame. */
 function ProjectMediaFrame({ project }: { project: Project }) {
-  const liveUrl = primaryLiveUrl(project);
+  const liveUrl = imageLinkUrl(project);
 
   if (!liveUrl) {
     return (
