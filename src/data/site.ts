@@ -16,7 +16,7 @@ export const SITE = {
  * non-clickable "LinkedIn — coming soon" placeholder. Filling this in is the
  * single edit needed to turn it into a real link.
  */
-export const LINKEDIN_URL = '';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/amir-rahm-142b58311';
 
 export const NAV_LINKS = [
   { label: 'Work', href: '#work' },
