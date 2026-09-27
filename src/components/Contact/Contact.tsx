@@ -27,7 +27,7 @@ export function Contact() {
           </h2>
           <p className={styles.lead}>
             Open to product-engineer / vibe-coder roles at AI-first startups
-            &mdash; Berlin or remote (CET).
+            &mdash; Munich or remote (CET).
           </p>
         </Reveal>
 

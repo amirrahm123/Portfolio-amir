@@ -9,6 +9,7 @@ field in `src/data/projects.ts` — the extension can be anything supported
 | AmirBallBot          | `amirballbot.png` or `.gif` |
 | ArikApp              | `arikapp.png`               |
 | Eran Beker — Law Firm| `ebeker.png`                |
+| Sandrine Estate      | `sandrine.webp`             |
 | Lotef — Pharmacy     | `lotef.png`                 |
 
 Recommended aspect ratio ≈ **1280×860** (matches the card's reserved box, so

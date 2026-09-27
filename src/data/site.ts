@@ -4,7 +4,7 @@
 export const SITE = {
   name: 'Amir Rahm',
   role: 'Product Engineer',
-  location: 'Berlin / Remote',
+  location: 'Munich / Remote',
   email: 'amirrahm135@gmail.com',
   github: 'https://github.com/amirrahm123',
 } as const;

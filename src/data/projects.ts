@@ -52,6 +52,32 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'sandrine',
+    title: 'Sandrine Estate — Event Venue',
+    kicker: 'Client work · Luxury venue site',
+    status: 'Live',
+    description:
+      "A luxury marketing site for Achuzat Sandrine, a 50-dunam wedding and events estate in northern Israel. Hebrew/RTL and mobile-first, with pre-rendered pages for SEO and a ten-collection photo gallery. Behind the contact form is a server-side lead pipeline that saves every enquiry before emailing it, so no lead is ever silently lost. Built solo for a client; live since August 2026.",
+    stack: ['React', 'TypeScript', 'Vite SSG', 'Tailwind', 'Vercel Functions', 'Vercel Blob', 'RTL/Hebrew'],
+    liveUrl: 'https://www.sandrine-events.com/',
+    codeUrl: null, // private client repo
+    image: 'sandrine',
+    tint: 'sage',
+  },
+  {
+    id: 'ebeker',
+    title: 'Eran Beker — Law Firm',
+    kicker: 'Client work · Marketing & lead capture',
+    status: 'Live',
+    description:
+      "A fully Hebrew/RTL marketing and client-intake site for one of Israel's leading personal-injury law firms (DUNS 100 / BDi-rated). Around 30 pages covering 15 practice areas, a hero carousel of the firm's TV and press coverage, and an intake form that emails the firm directly, with WhatsApp and click-to-call on every screen. Includes a full accessibility toolkit and statement, as Israeli law requires. Built solo for a real client.",
+    stack: ['React', 'Vite', 'EmailJS', 'Custom CSS', 'Canvas', 'RTL/Hebrew'],
+    liveUrl: 'https://ebeker.vercel.app/',
+    codeUrl: null, // PRIVATE client repo — card shows a muted "Private — client work" label
+    image: 'ebeker',
+    tint: 'greige',
+  },
+  {
     id: 'amirballbot',
     title: 'Amirballbot',
     kicker: 'Flagship · AI product',
@@ -83,20 +109,7 @@ export const projects: Project[] = [
       'Admin demo login — email: demo@arikapp.app · password: demo1234 (view-only)',
     imageUrl: 'https://arikapp-nu.vercel.app/admin/login', // image deep-links to the admin demo
     image: 'arikapp',
-    tint: 'sage',
-  },
-  {
-    id: 'ebeker',
-    title: 'Eran Beker — Law Firm',
-    kicker: 'Client work · Marketing & lead capture',
-    status: 'Live',
-    description:
-      "A polished, fully RTL marketing & client-intake site for one of Israel's leading personal-injury litigators (DUNS 100 / BDi-rated). A working lead-capture tool, not a brochure: the intake form emails the firm and opens a pre-filled WhatsApp, with conversion built into every screen. Features a hand-built canvas hero animation and a full accessibility toolkit. Built solo for a real client.",
-    stack: ['React', 'Vite', 'EmailJS', 'Custom CSS', 'Canvas', 'RTL/Hebrew'],
-    liveUrl: 'https://ebeker.vercel.app/',
-    codeUrl: null, // PRIVATE client repo — card shows a muted "Private — client work" label
-    image: 'ebeker',
-    tint: 'greige',
+    tint: 'blush',
   },
   {
     id: 'lotef',
@@ -109,6 +122,6 @@ export const projects: Project[] = [
     liveUrl: 'https://lotef.vercel.app/',
     codeUrl: 'https://github.com/amirrahm123/lotef',
     image: 'lotef',
-    tint: 'blush',
+    tint: 'greige',
   },
 ];
