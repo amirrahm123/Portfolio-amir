@@ -10,7 +10,7 @@
 <meta name="description" content="Amir Rahm designs and builds websites for law firms, private clinics and event venues in Israel and Germany.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#10151d;
@@ -223,31 +223,31 @@ a.frame:hover::after,a.frame:focus-visible::after{opacity:1;transform:none}
 .site.venue .art{background:linear-gradient(170deg,#3b5a4a,#1f3a2f);border:1px solid rgba(217,192,138,.4)}
 
 /* ball demo */
-.app{border-radius:14px;overflow:hidden;background:#0c1016;color:#e6eaf0;box-shadow:0 40px 80px -30px rgba(16,21,29,.6)}
-.app .bar{height:30px;background:#1a212b;display:flex;align-items:center;gap:6px;padding:0 12px}
-.app .bar i{width:8px;height:8px;border-radius:50%;background:#3a4452}
-.app .bar span{margin-left:12px;font-size:11px;color:#8b95a3}
-.app-body{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);min-height:360px}
-.screen{position:relative;background:#06090d;display:grid;place-items:center;overflow:hidden}
-.screen video,.screen canvas{width:100%;height:100%;object-fit:cover;display:block}
-.screen [hidden]{display:none}
-.screen .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,9,13,.55);border:0;cursor:pointer;color:#fff;transition:opacity .3s}
-.screen .play span{display:inline-flex;align-items:center;gap:10px;background:#e6eaf0;color:#0c1016;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px}
-.screen .play.hide{opacity:0;pointer-events:none}
-.screen .clock{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(0,0,0,.6);padding:3px 8px;border-radius:5px}
-.panel{border-left:1px solid #1e2631;padding:18px;display:flex;flex-direction:column;gap:12px;max-height:420px;overflow:auto}
-.status{font-size:13px;color:#8b95a3}
-.progress{height:3px;background:#1e2631;border-radius:3px;overflow:hidden}
-.progress b{display:block;height:100%;width:0;background:var(--brass);transition:width .4s linear}
-.plays{display:flex;flex-direction:column;gap:8px}
-.playrow{text-align:right;direction:rtl;background:#121821;border:1px solid #1e2631;border-radius:10px;padding:10px 12px;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s,border-color .2s}
-.playrow.in{opacity:1;transform:none}
-.playrow:hover,.playrow.on{border-color:var(--brass)}
-.playrow .t{direction:ltr;display:inline-block;font-size:12px;color:var(--brass-soft);margin-left:8px}
-.playrow b{font-weight:600;font-size:14px}
-.playrow p{font-size:13px;color:#aab3bf;margin-top:4px;line-height:1.5}
-.app-open{margin-left:auto;font-size:12px;color:var(--brass-soft);text-decoration:none;border:1px solid #3a4452;border-radius:999px;padding:3px 10px}
-.app-open:hover{border-color:var(--brass)}
+/* HoopAssist case */
+.case.hoop{grid-template-areas:"text media" "cards cards"}
+.case.hoop>div:first-child{grid-area:text}
+.case.hoop>div:nth-child(2){grid-area:media}
+.case.hoop .cards{grid-area:cards}
+.facts{list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.facts li{border-top:1px solid var(--ink);padding-top:10px}
+.facts b{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em}
+.facts span{font-size:12.5px;color:var(--stone)}
+.frame.film{position:relative;background:#070a0e;aspect-ratio:16/9}
+.frame.film video{display:block;width:100%;height:100%;object-fit:cover}
+.frame.film .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,9,13,.35);border:0;cursor:pointer;color:#fff;transition:opacity .3s}
+.frame.film .play span{display:inline-flex;align-items:center;gap:10px;background:#e6eaf0;color:#0c1016;padding:14px 22px;border-radius:999px;font-weight:600;font-size:15px;box-shadow:0 20px 40px -20px rgba(0,0,0,.8)}
+.frame.film .play.hide{opacity:0;pointer-events:none}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:8px}
+.pcard{background:#0c1016;color:#e6eaf0;border:1px solid #1e2631;border-right:4px solid #00e5a0;border-radius:14px;padding:20px 22px;text-align:right;font-family:"Heebo","Segoe UI",system-ui,sans-serif}
+.pcard.bad{border-right-color:#ff4d6a}.pcard.imp{border-right-color:#ffc544}
+.pcard .ph{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px}
+.pcard .pt{direction:ltr;font-size:13px;font-weight:600;color:#00e5a0;letter-spacing:.02em}
+.pcard.bad .pt{color:#ff4d6a}.pcard.imp .pt{color:#ffc544}
+.pcard .pk{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:6px;background:rgba(0,229,160,.14);color:#00e5a0}
+.pcard.bad .pk{background:rgba(255,197,68,.14);color:#ffc544}
+.pcard .ph b{display:block;width:100%;font-size:17px;font-weight:700;line-height:1.35;margin-top:4px}
+.pcard p{font-size:14px;line-height:1.65;color:#aab3bf;margin-top:8px}
+.pcard p b{color:#e6eaf0;font-weight:600}
 .shots.with-phone{position:relative}
 .case-phone{left:auto;right:-2%;bottom:-6%;width:22%;transition:transform .5s var(--ease)}
 .case-phone:hover{transform:translateY(-6px)}
@@ -313,8 +313,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .shots .second{margin-top:-40px}
   .sectors,.steps{grid-template-columns:1fr;gap:40px}
   .block{padding:88px 0}
-  .app-body{grid-template-columns:1fr}
-  .panel{border-left:0;border-top:1px solid #1e2631;max-height:none}
+  .case.hoop{grid-template-areas:"text" "media" "cards"}
+  .cards{grid-template-columns:1fr}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
   .row2{grid-template-columns:1fr}
   .site .body{max-width:100%}
   .site .art{display:none}
@@ -498,29 +499,43 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p class="muted just">Some businesses need software behind the site: bookings, admin panels, or tools that use AI to save staff hours. These two I built end to end.</p>
       </div>
 
-      <article class="case rv">
+      <article class="case rv hoop">
         <div>
           <h3>HoopAssist: game analysis for basketball coaches</h3>
           <p class="where muted">AI product, in active development</p>
-          <p class="brief just">Coaches upload a game and get back the key plays, each with written coaching notes in Hebrew, ready to review with the team. Several AI models work together: one watches the video, another writes the notes.</p>
-          <p class="sample-note">Press play for a short walkthrough of what a coach sees. The notes in this preview are illustrative.</p>
+          <p class="brief just">A coach uploads a quarter of film and gets back the 10 to 15 possessions worth showing the team, each with coaching notes in Hebrew: what happened, where everyone stood, what to fix. Gemini watches the video and logs every possession as an event chain; Claude reads the whole log with key frames, picks the plays and writes the notes. Clicking a time jumps the film to that exact possession.</p>
+          <ul class="facts">
+            <li><b>13</b><span>plays written</span></li>
+            <li><b>4</b><span>API calls per quarter</span></li>
+            <li><b>71s</b><span>end to end</span></li>
+            <li><b>11/11</b><span>verified correct by the coach</span></li>
+          </ul>
+          <p class="sample-note">The cards below are real output from an NBA quarter (Thunder vs Lakers), unedited.</p>
         </div>
         <div>
-          <div class="app">
-            <div class="bar"><i></i><i></i><i></i><span>HoopAssist</span></div>
-            <div class="app-body">
-              <div class="screen" id="screen">
-                <video id="vid" playsinline muted preload="metadata" poster="" hidden></video>
-                <canvas id="court" width="640" height="400" aria-hidden="true"></canvas>
-                <span class="clock" id="clock">0:00</span>
-                <button class="play" id="playBtn" type="button"><span>&#9654; Analyse sample game</span></button>
-              </div>
-              <div class="panel">
-                <p class="status" id="status">Waiting for a game</p>
-                <div class="progress"><b id="prog"></b></div>
-                <div class="plays" id="plays"></div>
-              </div>
-            </div>
+          <div class="frame film">
+            <video id="hoopVid" playsinline muted preload="none" poster="/media/hoopassist-poster.webp" width="1280" height="720" aria-label="HoopAssist, 80 second explainer"></video>
+            <button class="play" id="hoopPlay" type="button" aria-label="Play the HoopAssist explainer"><span>&#9654; Watch how it works (1:20)</span></button>
+          </div>
+        </div>
+        <div class="cards" dir="rtl" lang="he">
+          <div class="pcard good">
+            <div class="ph"><span class="pt">03:03 – 03:16</span><span class="pk">התקפה</span><b>Shai דרייב ומסירה ל-Dort בפינה לשלשה</b></div>
+            <p>Jalen Williams מוביל ומוסר ל-Shai, ו-Shai נכנס לדרייב לכיוון המרפק הימני. ההגנה קורסת עליו והוא מוסר ל-Dort הפנוי בפינה הימנית, שקולע שלשה.</p>
+            <p><b>עמדות:</b> Shai מושך שני מגנים אל הצבע ומשאיר את Dort בלי שמירה בפינה. Jalen Williams על הכנף ו-Hartenstein בצבע מחזיקים את שאר המגנים במקום.</p>
+            <p><b>למה זה עבד:</b> דרייב שיוצר עזרה ומסירה לשחקן הפנוי. Dort כבר קלע מהמקום הזה, ויש לחפש אותו שוב.</p>
+          </div>
+          <div class="pcard bad">
+            <div class="ph"><span class="pt">02:45 – 02:52</span><span class="pk">מעבר</span><b>איבוד כדור של Jalen Williams בדרייב עמוק</b></div>
+            <p>Jalen Williams מוביל מהר ונכנס עמוק לצבע מול שני מגנים שחוזרים. הוא זורק מסירה לא מדויקת ו-Dončić חוטף אותה מתחת לסל. הלייקרס יוצאים מיד למעבר.</p>
+            <p><b>עמדות:</b> Williams נכנס לצבע בלי חלון מסירה ברור, כששני שחקני לייקרס סוגרים עליו. Dort בכנף הימנית יכול היה לקבל את הכדור לפני הכניסה לצבע.</p>
+            <p><b>מה השתבש:</b> כשהכניסה לצבע נסגרת, עוצרים ומוסרים לכנף לפני שנכנסים לעומק. איבוד כדור במעבר הופך מיד לנקודות קלות ליריב.</p>
+          </div>
+          <div class="pcard imp">
+            <div class="ph"><span class="pt">02:24 – 02:39</span><span class="pk">התקפה</span><b>isolation של Shai: fadeaway בלי תנועה סביבו</b></div>
+            <p>Shai מוביל, מוסר ל-Dort ומקבל בחזרה. הוא נכנס ל-isolation על הקו האמצעי, מסתובב וזורק fadeaway תחת סימון צמוד. הכדור פוגע בטבעת ו-Ayton תופס את הריבאונד.</p>
+            <p><b>עמדות:</b> Shai תחת סימון צמוד של Reaves, חמשת הלייקרס סגורים סביבו. הצבע פנוי, אבל אין screen שמפעיל את ההגנה וכמעט אין תנועה בלי כדור.</p>
+            <p><b>מה אפשר לשפר:</b> להוסיף screen או cut כדי לשבור את הסימון, ולוודא שמישהו מוכן לריבאונד התקפי.</p>
           </div>
         </div>
       </article>
@@ -806,67 +821,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     if (!msg.value) msg.value = 'Hi Amir, I run a ' + label + (cityIn.value.trim() ? ' in ' + cityIn.value.trim() : '') + ' and would like a free homepage concept.';
   });
 
-  /* ---------- basketball analysis demo ----------
-     Replace DEMO with a real recorded run: { video: 'sample.mp4', duration, plays: [{ t, type, note }] }.
-     While video is null, a drawn court stands in for the footage. */
-  var DEMO = {
-    video: null,
-    duration: 48,
-    stages: ['Watching the full game', 'Finding the key plays', 'Reading jersey numbers', 'Writing coaching notes'],
-    plays: [
-      { t: 6, type: 'פיק אנד רול, סל משלוש', note: 'הגנה ירדה מתחת למסך ונתנה זריקה פתוחה. לעלות על המסך מול קלעי שלוש.' },
-      { t: 15, type: 'מתפרצת, לייאפ', note: 'ריבאונד הגנה ויציאה מהירה. שלושה מסרים קדימה לפני שההגנה התארגנה.' },
-      { t: 24, type: 'פוסט אפ, החטאה', note: 'הכדור נכנס לפוסט מאוחר מדי, אחרי 18 שניות. להכניס מוקדם יותר כדי להשאיר זמן לקריאה.' },
-      { t: 33, type: 'חדירה, עבירה ושתי זריקות', note: 'חדירה חזקה מהאגף השמאלי מול שחקן עם שלוש עבירות. ניצול נכון של מצב העבירות.' },
-      { t: 42, type: 'איבוד כדור', note: 'מסירה רוחבית מול הגנת אזור. לחפש את הקורנר ולא את מרכז המגרש.' }
-    ]
-  };
-  var vid = document.getElementById('vid'), court = document.getElementById('court'), ctx = court.getContext('2d');
-  var playBtn = document.getElementById('playBtn'), statusEl = document.getElementById('status'), prog = document.getElementById('prog'), list = document.getElementById('plays'), clock = document.getElementById('clock');
-  var running = false, t0 = 0, raf = 0, shown = 0, offset = 0;
-  if (DEMO.video) { vid.src = DEMO.video; vid.hidden = false; court.hidden = true; }
-  var dots = Array.from({ length: 10 }, function (_, i) { return { x: 80 + Math.random() * 480, y: 60 + Math.random() * 280, vx: (Math.random() - .5) * 1.6, vy: (Math.random() - .5) * 1.6, team: i < 5 }; });
-  function drawCourt(p) {
-    ctx.fillStyle = '#1b130c'; ctx.fillRect(0, 0, 640, 400);
-    ctx.fillStyle = '#7a5532'; ctx.fillRect(20, 20, 600, 360);
-    ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 2;
-    ctx.strokeRect(20, 20, 600, 360); ctx.beginPath(); ctx.moveTo(320, 20); ctx.lineTo(320, 380); ctx.stroke();
-    ctx.beginPath(); ctx.arc(320, 200, 46, 0, Math.PI * 2); ctx.stroke();
-    [[20, 1], [620, -1]].forEach(function (s) { ctx.strokeRect(s[1] > 0 ? 20 : 500, 140, 120, 120); ctx.beginPath(); ctx.arc(s[0], 200, 170, -Math.PI / 2.35, Math.PI / 2.35, s[1] < 0); if (s[1] < 0) { ctx.beginPath(); ctx.arc(620, 200, 170, Math.PI - Math.PI / 2.35, Math.PI + Math.PI / 2.35); } ctx.stroke(); });
-    dots.forEach(function (d) {
-      if (p) { d.x += d.vx; d.y += d.vy; if (d.x < 40 || d.x > 600) d.vx *= -1; if (d.y < 40 || d.y > 360) d.vy *= -1; }
-      ctx.fillStyle = d.team ? '#f2f2f2' : '#1e3a8a'; ctx.beginPath(); ctx.arc(d.x, d.y, 8, 0, Math.PI * 2); ctx.fill();
+  /* ---------- HoopAssist explainer ---------- */
+  var hv = document.getElementById('hoopVid'), hp = document.getElementById('hoopPlay');
+  if (hv && hp) {
+    hp.addEventListener('click', function () {
+      if (!hv.getAttribute('src')) hv.setAttribute('src', '/media/hoopassist.mp4');
+      hv.controls = true; hp.classList.add('hide'); hv.play();
     });
+    hv.addEventListener('ended', function () { hv.controls = false; hp.classList.remove('hide'); hv.load(); });
   }
-  drawCourt(false);
-  function fmt(s) { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
-  function addPlay(p) {
-    var row = document.createElement('div');
-    row.className = 'playrow'; row.tabIndex = 0; row.setAttribute('role', 'button');
-    row.innerHTML = '<b></b><span class="t"></span><p></p>';
-    row.querySelector('b').textContent = p.type; row.querySelector('.t').textContent = fmt(p.t); row.querySelector('p').textContent = p.note;
-    var seek = function () { offset = p.t; t0 = performance.now(); if (DEMO.video) vid.currentTime = p.t; list.querySelectorAll('.playrow').forEach(function (r) { r.classList.toggle('on', r === row); }); };
-    row.addEventListener('click', seek); row.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); seek(); } });
-    list.appendChild(row); requestAnimationFrame(function () { row.classList.add('in'); });
-  }
-  function tick(now) {
-    var el = offset + (now - t0) / 1000;
-    if (DEMO.video) el = vid.currentTime;
-    var p = Math.min(1, el / DEMO.duration);
-    prog.style.width = (p * 100) + '%';
-    clock.textContent = fmt(el);
-    statusEl.textContent = p < 1 ? DEMO.stages[Math.min(DEMO.stages.length - 1, Math.floor(p * DEMO.stages.length))] + '…' : 'Done: ' + DEMO.plays.length + ' plays with coaching notes';
-    while (shown < DEMO.plays.length && DEMO.plays[shown].t <= el) addPlay(DEMO.plays[shown++]);
-    if (!DEMO.video) drawCourt(p < 1);
-    if (p < 1) raf = requestAnimationFrame(tick); else running = false;
-  }
-  playBtn.addEventListener('click', function () {
-    if (running) return;
-    running = true; shown = 0; offset = 0; list.innerHTML = ''; var tr = document.getElementById('tryReal'); if (tr) tr.remove();
-    playBtn.classList.add('hide');
-    if (DEMO.video) vid.play();
-    t0 = performance.now(); raf = requestAnimationFrame(tick);
-  });
 
   /* ---------- contact form ---------- */
   var form = document.getElementById('ask'), err = document.getElementById('formErr'), sendBtn = document.getElementById('sendBtn');
