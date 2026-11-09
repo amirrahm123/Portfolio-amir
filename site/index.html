@@ -297,6 +297,46 @@ form.ask{display:grid;gap:16px}
 footer{padding:30px 0 40px;font-size:14px;color:var(--mist);border-top:1px solid var(--line-dark)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
+
+/* live AI assistant */
+.case.ai .seg button{border-color:var(--line);color:var(--ink)}
+.case.ai .seg button[aria-pressed="true"]{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
+.case.ai .seg{margin-top:28px}
+.case.ai .seg-label{display:block;font-size:14px;color:var(--stone);margin:28px 0 10px}
+.case.ai .seg-label+.seg{margin-top:0}
+.chat{display:flex;flex-direction:column;height:560px;background:var(--white)}
+.chat .who{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.chat .who .av{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--brass-soft);display:grid;place-items:center;font:500 14px var(--sans);flex:none}
+.chat .who b{display:block;font-weight:600;font-size:15px;line-height:1.2}
+.chat .who small{font-size:12.5px;color:var(--stone)}
+.chat .who small i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#3aa35b;margin-inline-end:6px;vertical-align:1px}
+.chat .log{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;scroll-behavior:auto}
+.msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.msg.bot{background:var(--porcelain);border-bottom-left-radius:5px;align-self:flex-start}
+.msg.me{background:var(--ink);color:var(--porcelain);border-bottom-right-radius:5px;align-self:flex-end}
+.msg a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.msg.err{background:#fbecea;color:#8a2d22}
+.typing{display:inline-flex;gap:4px;padding:14px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--mist);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.req{align-self:stretch;border:1px dashed var(--brass);border-radius:12px;padding:12px 14px;font-size:14px;background:#fbf7ef}
+.req b{display:block;font-size:13px;color:var(--brass);font-weight:600;margin-bottom:6px;letter-spacing:.02em}
+.req dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 12px}
+.req dt{color:var(--stone)}.req dd{margin:0}
+.req p{margin-top:8px;font-size:12.5px;color:var(--stone)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 18px 12px}
+.chips button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;color:var(--ink);transition:border-color .2s,background .2s}
+.chips button:hover{border-color:var(--brass);background:#fbf7ef}
+.chat form{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+.chat textarea{flex:1;resize:none;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:15px;height:44px;max-height:120px;background:var(--white)}
+.chat textarea:focus{outline:none;border-color:var(--brass)}
+.chat form .btn{padding:0 18px;height:44px}
+.chat-note{font-size:12.5px;color:var(--stone);margin-top:12px}
+.ask-ai{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--porcelain);border:0;border-radius:999px;padding:13px 20px;font:500 15px var(--sans);cursor:pointer;box-shadow:0 12px 30px -10px rgba(16,21,29,.55);transition:opacity .3s,transform .3s var(--ease)}
+.ask-ai i{width:9px;height:9px;border-radius:50%;background:var(--brass);box-shadow:0 0 0 4px rgba(176,138,79,.25)}
+.ask-ai.hide{opacity:0;transform:translateY(20px);pointer-events:none}
+@media (max-width:900px){.chat{height:520px}.msg{max-width:90%}.ask-ai{right:14px;bottom:14px;padding:12px 16px}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
@@ -441,11 +481,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             <li>Online booking for each department</li>
             <li>Content the clinic staff can edit themselves</li>
           </ul>
-          <div class="links"><a class="btn btn-ink" href="https://clinic-demo.vercel.app" target="_blank" rel="noopener">Open the concept</a></div>
+          <div class="links"><a class="btn btn-ink" href="https://clinic-demo-eosin-three.vercel.app" target="_blank" rel="noopener">Open the concept</a></div>
         </div>
         <div class="shots">
-          <a class="frame demo" href="https://clinic-demo.vercel.app" target="_blank" rel="noopener" aria-label="Open the clinic concept"><div class="bar"><i></i><i></i><i></i><span>clinic concept</span></div><img src="/img/cl.webp" alt="Homepage concept for a private clinic"></a>
-          <a class="frame demo second" href="https://clinic-demo.vercel.app/#team" target="_blank" rel="noopener" aria-label="Open the team section of the clinic concept"><div class="bar"><i></i><i></i><i></i><span>clinic concept</span></div><img src="/img/cl2.webp" alt="Team section of the clinic concept"></a>
+          <a class="frame demo" href="https://clinic-demo-eosin-three.vercel.app" target="_blank" rel="noopener" aria-label="Open the clinic concept"><div class="bar"><i></i><i></i><i></i><span>clinic concept</span></div><img src="/img/cl.webp" alt="Homepage concept for a private clinic"></a>
+          <a class="frame demo second" href="https://clinic-demo-eosin-three.vercel.app/#team" target="_blank" rel="noopener" aria-label="Open the team section of the clinic concept"><div class="bar"><i></i><i></i><i></i><span>clinic concept</span></div><img src="/img/cl2.webp" alt="Team section of the clinic concept"></a>
         </div>
       </article>
     </div>
@@ -496,8 +536,45 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
     <div class="wrap">
       <div class="head rv">
         <h2>When a website isn't enough</h2>
-        <p class="muted just">Some businesses need software behind the site: bookings, admin panels, or tools that use AI to save staff hours. These two I built end to end.</p>
+        <p class="muted just">Some businesses need software behind the site: bookings, admin panels, or tools that use AI to save staff hours. Everything here I built end to end.</p>
       </div>
+
+      <article class="case rv ai" id="assistant">
+        <div>
+          <span class="tag">Live demo, try it</span>
+          <h3>An AI assistant that knows your business</h3>
+          <p class="where muted">Answers clients and takes appointment requests, day and night</p>
+          <p class="brief just">This assistant is real and answers live. Pick a business and talk to it the way a client would: it explains the services, points people to the right lawyer, doctor or coordinator, and turns a question into an appointment request your team receives on WhatsApp or by email. The three businesses are fictional. One built for you uses your real services, hours and tone.</p>
+          <ul>
+            <li>Replies in Hebrew, English or German, in the visitor's language</li>
+            <li>Collects name, phone and preferred time for a call back</li>
+            <li>Never gives legal or medical advice, it guides people to the right person</li>
+            <li>Lives on your website or on your WhatsApp</li>
+          </ul>
+          <span class="seg-label" id="aiModeLabel">Talk to</span>
+          <div class="seg" role="group" aria-labelledby="aiModeLabel" id="aiModes">
+            <button type="button" data-mode="buildlab" aria-pressed="true">Me (Amir's assistant)</button>
+            <button type="button" data-mode="law" aria-pressed="false">A law firm</button>
+            <button type="button" data-mode="clinic" aria-pressed="false">A private clinic</button>
+            <button type="button" data-mode="venue" aria-pressed="false">An event venue</button>
+          </div>
+        </div>
+        <div>
+          <div class="frame">
+            <div class="bar"><i></i><i></i><i></i><span id="aiUrl">amir-rahm.dev</span></div>
+            <div class="chat">
+              <div class="who"><span class="av" id="aiAv">AR</span><div><b id="aiName">Amir's assistant</b><small><i></i>Online · AI assistant</small></div></div>
+              <div class="log" id="aiLog" aria-live="polite"></div>
+              <div class="chips" id="aiChips"></div>
+              <form id="aiForm" autocomplete="off">
+                <textarea id="aiInput" rows="1" maxlength="600" placeholder="Write a message…" aria-label="Message to the assistant"></textarea>
+                <button class="btn btn-brass" type="submit" id="aiSend">Send</button>
+              </form>
+            </div>
+          </div>
+          <p class="chat-note">Real AI (Claude). Conversations aren't stored; in the demo businesses nothing is sent anywhere.</p>
+        </div>
+      </article>
 
       <article class="case rv hoop">
         <div>
@@ -555,6 +632,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
           <a class="frame demo" href="https://arikapp-nu.vercel.app/" target="_blank" rel="noopener" aria-label="Open the ArikApp booking page"><div class="bar"><i></i><i></i><i></i><span>Booking page</span></div><img src="/img/arikbook.webp" alt="Booking page of the barbershop"></a>
           <a class="frame demo second" href="https://arikapp-nu.vercel.app/admin/login" target="_blank" rel="noopener" aria-label="Open the ArikApp owner dashboard"><div class="bar"><i></i><i></i><i></i><span>Owner dashboard</span></div><img src="/img/arik.webp" alt="Owner dashboard of the barbershop booking system"></a>
           <a class="phone case-phone" href="https://arikapp-nu.vercel.app/" target="_blank" rel="noopener" aria-label="Open the booking page on a phone"><img src="/img/arikmob.webp" alt="Choosing a service on the phone"></a>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div>
+          <span class="tag">Automation</span>
+          <h3>A lead engine that runs every morning</h3>
+          <p class="where muted">AI agent and follow-up dashboard, in daily use</p>
+          <p class="brief just">Built for my own business, and the same kind of system I build for offices that drown in enquiries and follow-ups. Each morning it searches Google Maps for law firms, clinics and venues, reviews every website (a technical check plus an AI design review of real screenshots), finds the contact details, and writes a personal message for each business. A dashboard then walks every lead through contact, follow-up reminders and replies, and a short email each morning lists who to call today.</p>
+          <ul>
+            <li>Around 30 new leads a day, in Israel and in Munich</li>
+            <li>Websites, emails and mobile numbers checked against their source, nothing guessed</li>
+            <li>Follow-up reminders every 3 days, with call notes and history</li>
+            <li>Runs on its own on GitHub Actions; the dashboard is a private web page</li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="frame demo"><div class="bar"><i></i><i></i><i></i><span>Lead dashboard (sample data)</span></div><img src="/img/leads.webp" alt="Lead dashboard with follow-up reminders, shown with sample data"></div>
         </div>
       </article>
     </div>
@@ -848,6 +943,127 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         err.textContent = 'The message could not be sent. Please email me at amirrahm135@gmail.com or message me on WhatsApp.';
         err.hidden = false; sendBtn.disabled = false; sendBtn.textContent = 'Send message';
       });
+  });
+})();
+</script>
+<button class="ask-ai hide" id="askAi" type="button"><i></i>Ask my AI assistant</button>
+<script>
+(() => {
+  const MODES = {
+    buildlab: { name: "Amir's assistant", av: 'AR', url: 'amir-rahm.dev',
+      hello: "Hi! I'm Amir's assistant. Ask me anything about his work, how a project runs, or what a website or AI tool could do for your business.",
+      chips: ['How does a project work?', 'What does a website cost?', 'Can you build an assistant like this for my business?', 'מה אתה עושה?'] },
+    law: { name: 'Cohen & Levi Law Office', av: 'CL', url: 'cohen-levi.co.il',
+      hello: 'Hello, welcome to Cohen & Levi. How can I help you today? I can tell you about our practice areas or book a free 20-minute call with a lawyer.',
+      chips: ["I'm getting divorced, who can help me?", 'Do you handle apartment purchases?', 'יש לי שאלה על ירושה', 'Book an intro call'] },
+    clinic: { name: 'Lindenhof Private Practice', av: 'LP', url: 'lindenhof-praxis.de',
+      hello: "Welcome to Lindenhof Private Practice. Tell me what you need help with and I'll find the right department for you, or book you an appointment.",
+      chips: ['My knee hurts after running', 'Do you take statutory insurance?', 'Sprechen Sie Englisch?', 'Book an appointment'] },
+    venue: { name: 'Olive Grove Estate', av: 'OG', url: 'olivegrove-estate.co.il',
+      hello: 'Welcome to Olive Grove Estate! Planning a wedding or an event? I can tell you about the estate or book you a tour.',
+      chips: ['How many guests can you host?', 'Is the catering kosher?', 'כמה עולה חתונה אצלכם?', 'Book a tour'] },
+  };
+  const $ = (id) => document.getElementById(id);
+  const log = $('aiLog'), input = $('aiInput'), form = $('aiForm'), chips = $('aiChips');
+  const chats = {}; // per mode: [{role, content}] + rendered cards
+  let mode = 'buildlab', busy = false;
+
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = (s) => esc(s)
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+    .replace(/\b([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})\b/gi, '<a href="mailto:$1">$1</a>')
+    .replace(/\n/g, '<br>');
+
+  function bubble(role, text, extra = '') {
+    const el = document.createElement('div');
+    el.className = `msg ${role === 'user' ? 'me' : 'bot'} ${extra}`;
+    el.dir = 'auto';
+    el.innerHTML = fmt(text);
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+  function cardEl(c) {
+    const el = document.createElement('div');
+    el.className = 'req';
+    if (c.type === 'booking') {
+      const rows = [['Name', c.name], ['Phone', c.phone], ['About', c.service], ['Preferred time', c.time], c.notes && ['Notes', c.notes]].filter(Boolean);
+      el.innerHTML = `<b>WHAT THE ${c.mode === 'venue' ? 'EVENTS TEAM' : c.mode === 'clinic' ? 'CLINIC' : 'OFFICE'} RECEIVES</b><dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd dir="auto">${esc(v || '-')}</dd>`).join('')}</dl><p>Demo: nothing was sent. In a real setup this arrives on the team's WhatsApp or email right away.</p>`;
+    } else {
+      el.innerHTML = `<b>SENT TO AMIR</b><p style="margin-top:0;color:inherit">Your message is in Amir's inbox. He replies within one working day.</p>`;
+    }
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+  function renderChips() {
+    const asked = chats[mode].items.filter((m) => m.role === 'user');
+    const used = new Set(asked.map((m) => m.content));
+    // fewer suggestions once the conversation is going, none after a few messages
+    const rest = MODES[mode].chips.filter((c) => !used.has(c));
+    // the last suggestion is the call to action (book / ask about a project): it always stays
+    const list = asked.length >= 3 ? [] : asked.length ? [...new Set([rest.at(-1), rest[0]])].filter(Boolean) : rest.slice(0, 4);
+    chips.innerHTML = list.map((c) => `<button type="button" dir="auto">${esc(c)}</button>`).join('');
+  }
+  function show(m) {
+    mode = m;
+    const M = MODES[m];
+    $('aiName').textContent = M.name; $('aiAv').textContent = M.av; $('aiUrl').textContent = M.url;
+    document.querySelectorAll('#aiModes button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+    chats[m] ||= { items: [{ role: 'assistant', content: M.hello }] };
+    log.innerHTML = '';
+    for (const it of chats[m].items) it.card ? cardEl(it.card) : bubble(it.role, it.content, it.err ? 'err' : '');
+    renderChips();
+    log.scrollTop = log.scrollHeight; // chips take space: keep the latest message in view
+  }
+  async function ask(text) {
+    text = text.trim();
+    if (!text || busy) return;
+    busy = true; $('aiSend').disabled = true;
+    const c = chats[mode], m = mode;
+    c.items.push({ role: 'user', content: text });
+    bubble('user', text);
+    input.value = ''; input.style.height = '';
+    chips.innerHTML = '';
+    const dots = document.createElement('div'); dots.className = 'msg bot typing'; dots.innerHTML = '<i></i><i></i><i></i>';
+    log.appendChild(dots); log.scrollTop = log.scrollHeight;
+    try {
+      const messages = c.items.filter((it) => !it.card && !it.err).map(({ role, content }) => ({ role, content }));
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: m, messages }) });
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(data.error || 'Something went wrong.');
+      if (data.card) c.items.push({ card: data.card });
+      c.items.push({ role: 'assistant', content: data.reply });
+    } catch (e) {
+      c.items.push({ role: 'assistant', content: e.message || 'Something went wrong, please try again.', err: true });
+    }
+    dots.remove();
+    if (mode === m) show(m);
+    busy = false; $('aiSend').disabled = false;
+    if (window.matchMedia('(min-width:901px)').matches) input.focus();
+  }
+
+  form.addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  input.addEventListener('input', () => { input.style.height = ''; input.style.height = Math.min(input.scrollHeight, 120) + 'px'; });
+  chips.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) ask(b.textContent); });
+  $('aiModes').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b && !busy) show(b.dataset.mode); });
+  show('buildlab');
+
+  // Floating button: everywhere except while the assistant (or the contact form) is on screen.
+  const btn = $('askAi'), sec = $('assistant'), contact = $('contact');
+  const seen = new Map();
+  const io = new IntersectionObserver((es) => {
+    es.forEach((x) => seen.set(x.target, x.isIntersecting));
+    const hero = window.scrollY < 300;
+    btn.classList.toggle('hide', hero || seen.get(sec) || seen.get(contact));
+  }, { threshold: 0.15 });
+  io.observe(sec); io.observe(contact);
+  window.addEventListener('scroll', () => { if (window.scrollY < 300) btn.classList.add('hide'); else if (!seen.get(sec) && !seen.get(contact)) btn.classList.remove('hide'); }, { passive: true });
+  btn.addEventListener('click', () => {
+    if (!busy) show('buildlab');
+    sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => input.focus({ preventScroll: true }), 600);
   });
 })();
 </script>
