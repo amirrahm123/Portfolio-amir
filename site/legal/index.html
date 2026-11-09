@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>בודק תיק עסקה – דמו AI לעורכי דין | אמיר רם</title>
+<meta name="description" content="דמו חי: AI שקורא את מסמכי עסקת הנדל״ן, מחלץ את הנתונים החשובים עם מקור לכל פרט, ומסמן אי-התאמות לבדיקת עורך הדין.">
+<meta property="og:title" content="בודק תיק עסקה – דמו AI לעורכי דין">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10151d;--ink-2:#18202b;--ink-3:#232d3a;--porcelain:#eef0f2;--white:#fbfbfc;--stone:#5f6773;--mist:#a9b1bc;
+  --line:#d6dae0;--line-dark:#2c3644;--brass:#b08a4f;--brass-soft:#d4bd92;--paper:#fbf7ef;
+  --high:#b3261e;--high-soft:#fbeceb;--med:#9a6400;--med-soft:#fff4dc;--low:#3b6c8f;--low-soft:#e9f1f7;--ok:#2f7d4f;
+  --serif:"Frank Ruhl Libre",Georgia,serif;--sans:"Heebo",system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--porcelain);color:var(--ink);font:400 16.5px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.muted{color:var(--stone)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:500 15.5px/1 var(--sans);padding:15px 26px;border-radius:999px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .2s,transform .3s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.55;cursor:wait;transform:none}
+.btn-brass{background:var(--brass);color:var(--ink)}.btn-brass:hover{background:var(--brass-soft)}
+.btn-ink{background:var(--ink);color:var(--porcelain)}
+.btn-line{border-color:currentColor;background:transparent}
+
+/* top */
+.top{background:var(--ink);color:var(--porcelain)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{font-family:var(--serif);font-size:22px;text-decoration:none}
+.top nav{display:flex;gap:22px;font-size:14.5px;color:var(--mist)}
+.top nav a{text-decoration:none}.top nav a:hover{color:var(--porcelain)}
+
+/* hero */
+.hero{background:var(--ink);color:var(--porcelain);padding:56px 0 64px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:end}
+.tag{display:inline-block;font-size:13px;color:var(--brass-soft);border:1px solid rgba(212,189,146,.5);padding:4px 12px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:clamp(38px,5vw,60px);line-height:1.05}
+.hero .lede{margin-top:18px;font-size:18.5px;color:#cfd5dc;max-width:640px}
+.hero ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-dark)}
+.hero li{padding:12px 0;border-bottom:1px solid var(--line-dark);font-size:15px;color:#cfd5dc;display:flex;gap:10px}
+.hero li b{color:var(--brass-soft);font-weight:500;min-width:22px}
+
+/* workspace */
+.ws{padding:40px 0 64px}
+.ws .wrap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px;align-items:start}
+.panel{background:var(--white);border-radius:14px;box-shadow:0 1px 2px rgba(16,21,29,.08),0 24px 50px -30px rgba(16,21,29,.35);overflow:hidden}
+.panel h2{font-size:24px}
+.panel-head{padding:18px 20px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+
+/* documents */
+.docs{position:sticky;top:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;padding:14px 20px 0}
+.tabs button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
+.tabs button .x{opacity:.6;font-size:12px}
+.tabs .add{border-style:dashed;color:var(--stone)}
+.paper{margin:14px 20px 20px;background:var(--paper);border:1px solid #eadfc8;border-radius:10px;padding:18px 20px;height:calc(100vh - 240px);min-height:420px;max-height:760px;overflow-y:auto;white-space:pre-wrap;font-size:14.5px;line-height:1.75;font-family:var(--sans)}
+.paper mark{background:#ffe08a;color:inherit;border-radius:3px;padding:1px 0;box-shadow:0 0 0 3px #ffe08a;animation:pulse 1.6s ease 2}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(255,224,138,.6)}}
+.addform{margin:14px 20px 20px;display:none;flex-direction:column;gap:10px}
+.addform.on{display:flex}
+.addform input,.addform textarea{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--white)}
+.addform textarea{min-height:300px;resize:vertical}
+.addform .row{display:flex;gap:8px;flex-wrap:wrap}
+.addform .note{font-size:12.5px}
+
+/* results */
+.start{padding:26px 24px 28px}
+.start p{margin-top:10px}
+.start .btn{margin-top:22px}
+.steps{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:10px}
+.steps li{display:flex;gap:12px;align-items:center;font-size:15px;color:var(--stone);transition:color .3s}
+.steps li i{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative}
+.steps li.on{color:var(--ink)}
+.steps li.on i{border-color:var(--brass);border-top-color:transparent;animation:spin .9s linear infinite}
+.steps li.done{color:var(--ink)}
+.steps li.done i{border-color:var(--ok);background:var(--ok)}
+.steps li.done i::after{content:"";position:absolute;inset:3px 5px 5px 4px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.timer{font-size:13px;margin-top:14px}
+.out{padding:22px 24px 26px;display:grid;gap:26px}
+.summary{background:var(--ink);color:var(--porcelain);border-radius:12px;padding:16px 18px;font-size:15.5px}
+.summary b{display:block;font-size:12.5px;color:var(--brass-soft);font-weight:500;letter-spacing:.04em;margin-bottom:4px}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.sec-h h3{font-size:22px}
+.sec-h span{font-size:13.5px}
+.issue{border:1px solid var(--line);border-inline-start:4px solid var(--low);border-radius:10px;padding:13px 16px;margin-bottom:10px;background:var(--white)}
+.issue.high{border-inline-start-color:var(--high)}.issue.medium{border-inline-start-color:var(--med)}
+.issue .t{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.issue .t b{font-weight:600;font-size:15.5px}
+.sev{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--low-soft);color:var(--low);flex:none}
+.sev.high{background:var(--high-soft);color:var(--high)}.sev.medium{background:var(--med-soft);color:var(--med)}
+.issue p{font-size:14.5px;margin-top:6px}
+.issue .act{color:var(--stone)}
+.issue .act::before{content:"לבדוק: ";font-weight:600;color:var(--ink)}
+.refs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.ref{border:1px solid var(--line);background:var(--porcelain);border-radius:999px;padding:3px 10px;font-size:12.5px;cursor:pointer;display:inline-flex;gap:5px;align-items:center;max-width:100%}
+.ref:hover{border-color:var(--brass)}
+.ref .ok{color:var(--ok);font-weight:700}
+.ref.unv{background:var(--med-soft);border-color:#f0d69a}
+.ref q{quotes:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:260px;color:var(--stone)}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:start;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--stone);width:30%}
+td .refs{margin-top:4px}
+.ask{border-top:1px solid var(--line);padding-top:22px}
+.ask form{display:flex;gap:8px;margin-top:10px}
+.ask input{flex:1;border:1px solid var(--line);border-radius:999px;padding:12px 16px;background:var(--white)}
+.ask input:focus{outline:none;border-color:var(--brass)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chips button{border:1px solid var(--line);background:transparent;border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer}
+.chips button:hover{border-color:var(--brass);background:var(--paper)}
+.qa{margin-top:14px;display:grid;gap:12px}
+.qa .q{font-weight:600;font-size:15px}
+.qa .a{font-size:15px;margin-top:4px}
+.qa .a.wait{color:var(--stone)}
+.err{background:var(--high-soft);color:var(--high);border-radius:10px;padding:12px 14px;font-size:14.5px}
+.foot-note{font-size:12.5px;color:var(--stone)}
+
+/* cta */
+.cta{background:var(--ink);color:var(--porcelain);padding:64px 0}
+.cta .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:center}
+.cta h2{font-size:clamp(30px,3.6vw,44px);line-height:1.1}
+.cta p{margin-top:14px;color:#cfd5dc;font-size:17px}
+.cta .acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+footer{background:var(--ink);color:var(--mist);font-size:13.5px;border-top:1px solid var(--line-dark)}
+footer .wrap{display:flex;justify-content:space-between;padding:18px 28px;gap:12px;flex-wrap:wrap}
+
+@media (max-width:960px){
+  .wrap{padding:0 18px}
+  .top nav{display:none}
+  .hero{padding:40px 0 44px}
+  .hero .wrap,.ws .wrap,.cta .wrap{grid-template-columns:1fr;gap:28px}
+  .docs{position:static}
+  .paper{height:auto;max-height:340px;min-height:0}
+  .cta .acts{justify-content:flex-start}
+  .ref q{max-width:180px}
+  th{width:38%}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/he/">אמיר רם</a>
+    <nav aria-label="ניווט"><a href="/he/#work">עבודות</a><a href="/he/#software">מערכות ו-AI</a><a href="/he/#contact">צור קשר</a><a href="/" lang="en">English</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="tag">דמו חי · כל המסמכים והנתונים בדויים</span>
+      <h1>בודק תיק עסקה</h1>
+      <p class="lede">AI שקורא את כל מסמכי עסקת הנדל״ן, מחלץ את הנתונים החשובים עם מקור מדויק לכל פרט, ומסמן לעורך הדין כל אי-התאמה בין המסמכים. עבודה של שעה, בפחות מדקה.</p>
+    </div>
+    <ul>
+      <li><b>1</b>בחרו את התיק לדוגמה, או הדביקו מסמך משלכם</li>
+      <li><b>2</b>לחצו "בדקו את התיק" ותקבלו נתונים מרכזיים ורשימת דגלים אדומים</li>
+      <li><b>3</b>לחצו על מקור כדי לראות את הציטוט מסומן במסמך, ושאלו את התיק כל שאלה</li>
+    </ul>
+  </div>
+</section>
+
+<main class="ws">
+  <div class="wrap">
+    <section class="panel docs" aria-label="מסמכי התיק">
+      <div class="panel-head"><h2>מסמכי התיק</h2><span class="muted" id="docCount"></span></div>
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="paper" id="paper" tabindex="0" aria-live="polite"></div>
+      <form class="addform" id="addForm">
+        <input id="addName" maxlength="40" placeholder="שם המסמך (למשל: הסכם שכירות)" required>
+        <textarea id="addText" maxlength="25000" placeholder="הדביקו כאן טקסט של מסמך…" required></textarea>
+        <p class="note muted">לדמו בלבד: אל תדביקו מסמכים אמיתיים עם פרטים מזהים או חסויים.</p>
+        <div class="row"><button class="btn btn-ink" type="submit">הוסיפו לתיק</button><button class="btn btn-line" type="button" id="addCancel">ביטול</button></div>
+      </form>
+    </section>
+
+    <section class="panel" aria-label="תוצאות הבדיקה" id="results">
+      <div class="start" id="start">
+        <h2>מה ה-AI יעשה עם התיק</h2>
+        <p class="muted">יקרא את כל המסמכים יחד, כמו מתמחה קפדן: יחלץ צדדים, ת.ז., גוש וחלקה, תמורה ותשלומים, מועדים, משכנתאות והערות, יצליב ביניהם ויסמן כל מה שלא מסתדר. ליד כל פרט יופיע המקור, ומערכת בודקת שהציטוט באמת מופיע במסמך.</p>
+        <button class="btn btn-brass" id="run" type="button">בדקו את התיק</button>
+        <ol class="steps" id="steps" hidden>
+          <li><i></i>קורא את המסמכים</li>
+          <li><i></i>מחלץ צדדים, נכס, תמורה ומועדים</li>
+          <li><i></i>מצליב בין המסמכים ומחשב סכומים</li>
+          <li><i></i>מאמת כל ציטוט מול המסמך</li>
+        </ol>
+        <p class="timer muted" id="timer" hidden></p>
+      </div>
+      <div class="out" id="out" hidden></div>
+    </section>
+  </div>
+</main>
+
+<section class="cta">
+  <div class="wrap">
+    <div>
+      <h2>רוצים כלי כזה על המסמכים של המשרד שלכם?</h2>
+      <p>אני בונה כלי AI שמותאמים לסוג התיקים שלכם: עסקאות, חוזי שכירות, תיקי נזיקין או כל מסמך שחוזר על עצמו. מתחילים מתיק לדוגמה אחד, ורואים אותו עובד לפני שמחליטים.</p>
+    </div>
+    <div class="acts">
+      <a class="btn btn-brass" href="https://wa.me/972527044989?text=%D7%94%D7%99%D7%99%20%D7%90%D7%9E%D7%99%D7%A8%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%90%D7%AA%20%D7%93%D7%9E%D7%95%20%D7%91%D7%95%D7%93%D7%A7%20%D7%AA%D7%99%D7%A7%20%D7%94%D7%A2%D7%A1%D7%A7%D7%94%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%95%D7%93" target="_blank" rel="noopener">דברו איתי בוואטסאפ</a>
+      <a class="btn btn-line" href="/he/#contact">השאירו פרטים</a>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap"><span>אמיר רם · אתרים, מערכות וכלי AI לעסקים</span><span>הדמו משתמש ב-Claude. המסמכים לא נשמרים.</span></div></footer>
+
+<script src="/legal/samples.js"></script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const docs = window.SAMPLES.map((d) => ({ ...d, sample: true }));
+  let active = docs[0].id, result = null, busy = false;
+
+  // ---- documents ----
+  function renderTabs() {
+    $('tabs').innerHTML = docs.map((d) => `<button type="button" role="tab" data-id="${d.id}" aria-selected="${d.id === active}">${esc(d.name)}${d.sample ? '' : ' <span class="x" data-del="' + d.id + '" title="הסר">✕</span>'}</button>`).join('')
+      + (docs.length < 4 ? '<button type="button" class="add" id="addBtn">＋ הוסיפו מסמך</button>' : '');
+    $('docCount').textContent = `${docs.length} מסמכים`;
+  }
+  function showDoc(id, hl) {
+    active = id; renderTabs();
+    $('addForm').classList.remove('on'); $('paper').hidden = false;
+    const d = docs.find((x) => x.id === id);
+    const r = hl ? findQuote(d.text, hl) : null;
+    $('paper').innerHTML = r ? esc(d.text.slice(0, r[0])) + '<mark id="hl">' + esc(d.text.slice(r[0], r[1])) + '</mark>' + esc(d.text.slice(r[1])) : esc(d.text);
+    if (r) { const m = $('hl'); $('paper').scrollTop = m.offsetTop - $('paper').clientHeight / 3; if (matchMedia('(max-width:960px)').matches) $('paper').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    else $('paper').scrollTop = 0;
+  }
+  // Same normalisation as the server: ignore spacing and quote-mark variants, keep a map back to the original text.
+  const SKIP = /[\s״”“"׳’‘`']/;
+  function findQuote(text, quote) {
+    const idx = [], chars = [];
+    for (let i = 0; i < text.length; i++) { let c = text[i]; if (SKIP.test(c)) continue; if (/[–—־-]/.test(c)) c = '-'; chars.push(c.toLowerCase()); idx.push(i); }
+    const q = [...quote].filter((c) => !SKIP.test(c)).map((c) => (/[–—־-]/.test(c) ? '-' : c.toLowerCase())).join('');
+    if (q.length < 3) return null;
+    const at = chars.join('').indexOf(q);
+    return at < 0 ? null : [idx[at], idx[at + q.length - 1] + 1];
+  }
+  $('tabs').addEventListener('click', (e) => {
+    const del = e.target.closest('[data-del]');
+    if (del) { const i = docs.findIndex((d) => d.id === del.dataset.del); docs.splice(i, 1); showDoc(docs[0].id); resetResults(); return; }
+    if (e.target.closest('#addBtn')) { $('addForm').classList.add('on'); $('paper').hidden = true; $('addName').focus(); return; }
+    const b = e.target.closest('[data-id]'); if (b) showDoc(b.dataset.id);
+  });
+  $('addCancel').onclick = () => showDoc(active);
+  $('addForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = $('addText').value.trim(), name = $('addName').value.trim() || 'מסמך';
+    if (text.length < 40) return alert('המסמך קצר מדי.');
+    const id = 'mine' + Date.now().toString(36);
+    docs.push({ id, name, text }); $('addText').value = ''; $('addName').value = '';
+    showDoc(id); resetResults();
+  });
+
+  // ---- review ----
+  const SEV = { high: 'חשוב', medium: 'לבדיקה', low: 'הערה' };
+  const docName = (id) => docs.find((d) => d.id === id)?.name || id;
+  const refsHtml = (refs) => refs?.length ? `<div class="refs">${refs.map((r) =>
+    `<button type="button" class="ref ${r.verified ? '' : 'unv'}" data-doc="${esc(r.doc)}" data-q="${esc(r.quote)}" title="${r.verified ? 'הציטוט נמצא במסמך. לחצו כדי לראות אותו מסומן' : 'הציטוט לא נמצא מילה במילה במסמך, יש לבדוק ידנית'}">${r.verified ? '<span class="ok">✓</span>' : '⚠'} ${esc(docName(r.doc))} <q>${esc(r.quote)}</q></button>`).join('')}</div>` : '';
+  function resetResults() { result = null; $('out').hidden = true; $('start').hidden = false; $('steps').hidden = true; $('timer').hidden = true; $('run').hidden = false; }
+
+  let tick;
+  async function api(body) {
+    const r = await fetch('/api/legal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...body, docs: docs.map(({ id, name, text }) => ({ id, name, text })) }) });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || 'משהו השתבש, נסו שוב.');
+    return data;
+  }
+  $('run').addEventListener('click', async () => {
+    if (busy) return; busy = true;
+    $('run').hidden = true; $('steps').hidden = false; $('timer').hidden = false;
+    const lis = [...$('steps').children]; lis.forEach((l) => (l.className = ''));
+    const t0 = Date.now(); let step = 0; lis[0].className = 'on';
+    tick = setInterval(() => {
+      const s = (Date.now() - t0) / 1000;
+      $('timer').textContent = `${Math.floor(s)} שניות · עורך דין היה צריך לזה כשעה`;
+      const want = Math.min(3, Math.floor(s / 6));
+      while (step < want) { lis[step].className = 'done'; step++; lis[step].className = 'on'; }
+    }, 300);
+    try {
+      result = await api({ action: 'review' });
+      lis.forEach((l) => (l.className = 'done'));
+      setTimeout(() => renderResult((Date.now() - t0) / 1000), 350);
+    } catch (e) {
+      $('out').hidden = false; $('out').innerHTML = `<div class="err">${esc(e.message)}</div>`;
+      $('run').hidden = false; $('steps').hidden = true;
+    }
+    clearInterval(tick); busy = false;
+  });
+
+  function renderResult(secs) {
+    const r = result, all = [...r.fields.flatMap((f) => f.refs), ...r.issues.flatMap((i) => i.refs)];
+    const ok = all.filter((x) => x.verified).length;
+    $('start').hidden = true; $('out').hidden = false;
+    $('out').innerHTML = `
+      <div class="summary"><b>סיכום · ${Math.round(secs)} שניות · ${ok}/${all.length} מקורות אומתו במסמכים</b>${esc(r.summary)}</div>
+      <div>
+        <div class="sec-h"><h3>דגלים לבדיקה</h3><span class="muted">${r.issues.length} ממצאים, החשובים קודם</span></div>
+        ${r.issues.map((i) => `<div class="issue ${i.severity}"><div class="t"><span class="sev ${i.severity}">${SEV[i.severity]}</span><b>${esc(i.title)}</b></div><p>${esc(i.detail)}</p>${i.action ? `<p class="act">${esc(i.action)}</p>` : ''}${refsHtml(i.refs)}</div>`).join('') || '<p class="muted">לא נמצאו אי-התאמות.</p>'}
+      </div>
+      <div>
+        <div class="sec-h"><h3>נתונים מרכזיים</h3><span class="muted">לחצו על מקור כדי לראות אותו במסמך</span></div>
+        <table><tbody>${r.fields.map((f) => `<tr><th>${esc(f.label)}</th><td>${esc(f.value)}${refsHtml(f.refs)}</td></tr>`).join('')}</tbody></table>
+      </div>
+      <div class="ask">
+        <div class="sec-h"><h3>שאלו את התיק</h3></div>
+        <form id="askForm" autocomplete="off"><input id="askIn" maxlength="400" placeholder="למשל: מה קורה אם הקונה מאחר בתשלום?"><button class="btn btn-ink" type="submit">שאלו</button></form>
+        <div class="chips" id="askChips">${['מתי מועד מסירת החזקה?', 'מה הפיצוי המוסכם על הפרה?', 'מי משלם את מס השבח?', 'כמה כסף צריך לסילוק המשכנתא?'].map((q) => `<button type="button">${q}</button>`).join('')}</div>
+        <div class="qa" id="qa"></div>
+      </div>
+      <p class="foot-note">זהו כלי עזר: הוא מסמן ומסכם, ועורך הדין מחליט. ✓ = הציטוט נמצא במסמך מילה במילה. ⚠ = לא נמצא, יש לבדוק ידנית.</p>
+      <div><button class="btn btn-line" type="button" id="again">בדקו שוב</button></div>`;
+    $('again').onclick = () => { resetResults(); $('run').click(); };
+    $('askForm').addEventListener('submit', (e) => { e.preventDefault(); ask($('askIn').value); });
+    $('askChips').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { b.remove(); ask(b.textContent); } });
+    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  async function ask(q) {
+    q = q.trim(); if (!q || busy) return; busy = true;
+    $('askIn').value = '';
+    const el = document.createElement('div');
+    el.innerHTML = `<p class="q">${esc(q)}</p><p class="a wait">קורא את התיק…</p>`;
+    $('qa').prepend(el);
+    try {
+      const r = await api({ action: 'ask', question: q });
+      el.innerHTML = `<p class="q">${esc(q)}</p><p class="a">${esc(r.answer)}</p>${refsHtml(r.refs)}`;
+    } catch (e) { el.innerHTML = `<p class="q">${esc(q)}</p><div class="err">${esc(e.message)}</div>`; }
+    busy = false;
+  }
+  $('results').addEventListener('click', (e) => { const b = e.target.closest('.ref'); if (b) showDoc(b.dataset.doc, b.dataset.q); });
+
+  renderTabs(); showDoc(active);
+})();
+</script>
+</body>
+</html>

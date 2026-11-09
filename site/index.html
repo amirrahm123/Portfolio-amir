@@ -7,6 +7,8 @@
 <meta property="og:title" content="Amir Rahm – Websites for law firms, clinics and event venues">
 <meta property="og:image" content="/img/eb.webp">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="he" href="/he/">
+<link rel="alternate" hreflang="en" href="/">
 <meta name="description" content="Amir Rahm designs and builds websites for law firms, private clinics and event venues in Israel and Germany.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -291,13 +293,14 @@ form.ask{display:grid;gap:16px}
 .ask textarea{min-height:150px;resize:vertical}
 .ask input:focus,.ask select:focus,.ask textarea:focus{outline:none;border-color:var(--brass)}
 .ask .err{font-size:13px;color:#e8a3a3;margin-top:6px}
-.ask .hp{position:absolute;left:-9999px}
+.ask .hp{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);opacity:0;pointer-events:none}
 .ask .sent{background:var(--ink-2);border:1px solid var(--line-dark);border-radius:12px;padding:28px}
 .ask .sent h3{font-size:26px}
 footer{padding:30px 0 40px;font-size:14px;color:var(--mist);border-top:1px solid var(--line-dark)}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 
+.lang-sw{font-size:14.5px;text-decoration:none;opacity:.8;margin-inline-end:16px}.lang-sw:hover{opacity:1}
 /* live AI assistant */
 .case.ai .seg button{border-color:var(--line);color:var(--ink)}
 .case.ai .seg button[aria-pressed="true"]{background:var(--ink);color:var(--porcelain);border-color:var(--ink)}
@@ -314,7 +317,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .msg{max-width:84%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
 .msg.bot{background:var(--porcelain);border-bottom-left-radius:5px;align-self:flex-start}
 .msg.me{background:var(--ink);color:var(--porcelain);border-bottom-right-radius:5px;align-self:flex-end}
-.msg a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.msg a{color:inherit;text-decoration:underline;text-underline-offset:2px;direction:ltr;unicode-bidi:isolate;display:inline-block;max-width:100%;overflow-wrap:anywhere}
 .msg.err{background:#fbecea;color:#8a2d22}
 .typing{display:inline-flex;gap:4px;padding:14px}
 .typing i{width:6px;height:6px;border-radius:50%;background:var(--mist);animation:blink 1.2s infinite}
@@ -389,6 +392,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
       <a href="#software">Software</a>
       <a href="#about">About</a>
     </nav>
+    <a class="lang-sw" href="/he/" lang="he" hreflang="he">עברית</a>
     <a class="btn btn-ink" href="#contact">Get in touch</a>
   </div>
 </header>
@@ -573,6 +577,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
             </div>
           </div>
           <p class="chat-note">Real AI (Claude). Conversations aren't stored; in the demo businesses nothing is sent anywhere.</p>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div>
+          <span class="tag">Live demo, try it</span>
+          <h3>Document AI for law firms</h3>
+          <p class="where muted">Reviews a real-estate deal file in under a minute (Hebrew, fictional data)</p>
+          <p class="brief just">A sale agreement, a land registry extract and a bank letter: the documents a lawyer cross-checks line by line before a property deal. The AI reads them together, pulls out the key data with an exact quote for every item, and flags what doesn't match: a different sub-parcel, a swapped ID digit, a third-party warning note the contract never mentions, payments that don't add up. Every quote is checked against the document before it's shown, and the lawyer can ask the file questions in plain language.</p>
+          <ul>
+            <li>Key data and red flags with a source for each, verified against the text</li>
+            <li>Click any source to see it highlighted in the document</li>
+            <li>Built the same way for leases, injury files or any document that repeats</li>
+          </ul>
+          <div class="links"><a class="btn btn-ink" href="/legal/">Try the demo</a></div>
+        </div>
+        <div class="shots">
+          <a class="frame demo" href="/legal/" aria-label="Open the document AI demo"><div class="bar"><i></i><i></i><i></i><span>Deal file review (demo)</span></div><img src="/img/legal.webp" alt="Document AI demo: red flags with verified sources next to the land registry extract"></a>
         </div>
       </article>
 
@@ -971,7 +993,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmt = (s) => esc(s)
     .replace(/\*\*(.+?)\*\*/g, '$1')
-    .replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+    .replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, (u) => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</a>`)
     .replace(/\b([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})\b/gi, '<a href="mailto:$1">$1</a>')
     .replace(/\n/g, '<br>');
 
