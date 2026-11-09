@@ -203,6 +203,7 @@ export default async function handler(req, res) {
     }
     res.status(200).json({ reply: 'Done.', card });
   } catch (e) {
-    res.status(502).json({ error: 'The assistant is resting for a moment. Please try again.' });
+    console.error('chat api error:', e.message);
+    res.status(502).json({ error: 'The assistant is resting for a moment. Please try again.', detail: String(e.message || '').slice(0, 200) });
   }
 }

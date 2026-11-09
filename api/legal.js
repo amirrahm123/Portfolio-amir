@@ -21,6 +21,12 @@ Rules:
 - Do arithmetic yourself when relevant (e.g. whether payments add up to the price) and show the numbers.
 - Check dates against each other (e.g. validity periods vs. the signing date).`;
 
+const REF = {
+  type: 'object',
+  properties: { doc: { type: 'string', description: 'Document id' }, quote: { type: 'string', description: 'Exact quote, 3-20 words' } },
+  required: ['doc', 'quote'],
+};
+
 const REVIEW_TOOL = {
   name: 'file_review',
   description: 'The structured review of the file.',
@@ -36,7 +42,7 @@ const REVIEW_TOOL = {
           properties: {
             label: { type: 'string' },
             value: { type: 'string' },
-            refs: { type: 'array', items: { $ref: '#/$defs/ref' } },
+            refs: { type: 'array', items: REF },
           },
           required: ['label', 'value', 'refs'],
         },
@@ -51,20 +57,13 @@ const REVIEW_TOOL = {
             title: { type: 'string', description: 'Short, specific.' },
             detail: { type: 'string', description: 'What each document says and why it matters, 1-3 sentences.' },
             action: { type: 'string', description: 'What the lawyer should check or do next.' },
-            refs: { type: 'array', items: { $ref: '#/$defs/ref' } },
+            refs: { type: 'array', items: REF },
           },
           required: ['severity', 'title', 'detail', 'refs'],
         },
       },
     },
     required: ['summary', 'fields', 'issues'],
-    $defs: {
-      ref: {
-        type: 'object',
-        properties: { doc: { type: 'string', description: 'Document id' }, quote: { type: 'string', description: 'Exact quote, 3-20 words' } },
-        required: ['doc', 'quote'],
-      },
-    },
   },
 };
 
@@ -75,7 +74,7 @@ const ASK_TOOL = {
     type: 'object',
     properties: {
       answer: { type: 'string', description: 'Direct answer in Hebrew, 1-4 sentences. If the documents do not say, answer that clearly.' },
-      refs: { type: 'array', items: { type: 'object', properties: { doc: { type: 'string' }, quote: { type: 'string' } }, required: ['doc', 'quote'] } },
+      refs: { type: 'array', items: REF },
     },
     required: ['answer', 'refs'],
   },
@@ -154,6 +153,7 @@ export default async function handler(req, res) {
         .sort((a, b) => order[a.severity] - order[b.severity]),
     });
   } catch (e) {
-    res.status(502).json({ error: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.' });
+    console.error('legal api error:', e.message);
+    res.status(502).json({ error: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.', detail: String(e.message || '').slice(0, 200) });
   }
 }
