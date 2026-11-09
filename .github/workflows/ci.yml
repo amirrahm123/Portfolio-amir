@@ -1,0 +1,36 @@
+name: Tests
+
+# push → tests → result next to the commit on GitHub (✓ / ✗).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit:
+    name: Unit + API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - name: Hebrew page is in sync with the English page
+        run: python3 scripts/make-he.py --check
+
+  e2e:
+    name: Browser tests (desktop + phone, EN + HE)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright-core install --with-deps chromium
+      - run: npm run test:e2e

@@ -23,3 +23,9 @@ Vercel environment variables:
 | `GMAIL_USER`, `GMAIL_APP_PASSWORD` | contact form and assistant enquiries |
 
 `npm run build` copies `site/` to `dist/`, which Vercel serves. The previous React version lives on the `legacy-v1` branch.
+
+Tests (run on every push by GitHub Actions, `.github/workflows/ci.yml`):
+
+- `npm test` – unit and API tests with a fake Claude (`test/`): quote verification, review/ask flows, limits, rate limits, chat modes, booking vs. enquiry email.
+- `npm run test:e2e` – a real browser clicks through `/`, `/he/` and `/legal/` on desktop and phone (`e2e/`), with the AI faked: no sideways scrolling, no broken assets or JS errors, chat booking card, legal review → highlight → ask. Locally: `CHROME_PATH=/path/to/chrome npm run test:e2e`.
+- `python3 scripts/make-he.py --check` – fails if the Hebrew page is out of date with the English one.

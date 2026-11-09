@@ -118,9 +118,16 @@ left = [t.strip() for t in re.findall(r'>([^<>]*[A-Za-z]{4,}[^<>]*)<', body) if 
 left = [t for t in left if not re.search(r'HoopAssist|demo@arikapp|Next\.js|Sprechen|NBA|Gemini|Claude|\.co\.il|\.com|GitHub', t)]
 
 out = ROOT / 'site' / 'he' / 'index.html'
-out.parent.mkdir(exist_ok=True)
-out.write_text(s, encoding='utf8')
-print(f'wrote {out.relative_to(ROOT)}')
+if '--check' in sys.argv:
+    # CI: fail if the committed Hebrew page is out of date with the English one
+    if not out.exists() or out.read_text(encoding='utf8') != s:
+        print('site/he/index.html is out of date: run python3 scripts/make-he.py and commit it')
+        sys.exit(1)
+    print('site/he/index.html is up to date')
+else:
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(s, encoding='utf8')
+    print(f'wrote {out.relative_to(ROOT)}')
 for m in missing + ['still English: ' + t[:80] for t in left]:
     print('  !', m)
 sys.exit(1 if missing or left else 0)

@@ -4,9 +4,15 @@
   "version": "2.0.0",
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.js",
+    "test:e2e": "node --test e2e/*.e2e.js",
+    "check:he": "python3 scripts/make-he.py --check"
   },
   "dependencies": {
     "nodemailer": "^6.9.16"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1"
   }
 }
