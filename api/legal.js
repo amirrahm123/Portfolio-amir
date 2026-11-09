@@ -106,15 +106,20 @@ async function claude(system, user, tool, maxTokens) {
       max_tokens: maxTokens,
       system,
       tools: [tool],
-      tool_choice: { type: 'tool', name: tool.name },
-      messages: [{ role: 'user', content: user }],
+      // this model doesn't accept a forced tool_choice: ask for the tool in the prompt instead
+      messages: [{ role: 'user', content: `${user}\n\nReturn your result by calling the ${tool.name} tool (only that, no other text).` }],
     }),
   });
   const j = await r.json();
   if (!r.ok) throw new Error(j?.error?.message || `Claude ${r.status}`);
   const use = (j.content || []).find((b) => b.type === 'tool_use');
-  if (!use) throw new Error('no structured answer');
-  return use.input;
+  if (use) return use.input;
+  // fallback: the model answered in text; take the JSON object out of it
+  const text = (j.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
+  const m = text.match(/\{[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch { /* not JSON */ } }
+  if (tool.name === 'answer' && text.trim()) return { answer: text.trim(), refs: [] };
+  throw new Error('no structured answer');
 }
 
 export default async function handler(req, res) {
