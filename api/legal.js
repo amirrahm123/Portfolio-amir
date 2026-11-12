@@ -20,8 +20,15 @@ Rules:
 - Every fact you report must come with its source: the document id and a SHORT EXACT quote copied character for character from that document (3 to 20 words, no "..." inside, keep the original spelling, punctuation and numbers).
 - Write in Hebrew, clear and concise, the way a senior associate would brief a partner.
 - When documents disagree, say exactly what each one says and quote both.
-- Do arithmetic yourself when relevant (e.g. whether payments add up to the price) and show the numbers.
-- Check dates against each other (e.g. validity periods vs. the signing date).`;
+- Do the arithmetic yourself wherever numbers should agree (payments vs. the price, percentages, areas) and show the numbers. A sum that does not add up is a finding of its own, kind "mismatch", severity high when it concerns the price or the payments. Never fold it into a finding about something else.
+- Dates: before you write about a validity period, work out the last valid day (issue date + period), then compare it with each relevant date separately (signing, each payment, handover). Say "expired before X" only when the last valid day is earlier than X. If it is still valid on the signing date but ends before a later payment, say exactly that.
+- One finding per subject. The title states the finding itself and must agree with the detail: never a title that says things match when the detail shows they do not, and never a title about one subject over a detail about another.
+- Things you checked and found consistent are not findings. Mention them in the summary, not in the list.
+
+Two kinds of findings, keep them apart:
+- "mismatch": a hard contradiction you can show with two quotes. Two documents state different things about the same fact (identifier, ID number, name, bank, area, attachment), a document contradicts the registry (e.g. the contract declares there are no notes and the extract shows one), numbers inside a document do not add up, or a document is already out of date on the date it is relied on.
+- "check": a point for the lawyer's judgment where nothing contradicts anything: a missing mechanism or document, a clause worth tightening, a timing gap, a question to ask the client. Severity of a "check" is medium or low, never high.
+If the documents are consistent with each other, return no "mismatch" findings at all. Do not promote a general observation to a mismatch, and do not invent a contradiction to have something to report.`;
 
 const REF = {
   type: 'object',
@@ -37,17 +44,18 @@ const REVIEW_TOOL = {
     properties: {
       issues: {
         type: 'array',
-        description: 'Discrepancies, risks and missing items for the lawyer, most important first. Write these FIRST. At most 2 sources per item.',
+        description: 'Findings for the lawyer: first every mismatch, then the points to check, most important first. Write these FIRST. At most 2 sources per item. At most 6 items of kind "check".',
         items: {
           type: 'object',
           properties: {
+            kind: { type: 'string', enum: ['mismatch', 'check'], description: 'mismatch = a hard contradiction shown by quotes; check = a point for the lawyer to consider.' },
             severity: { type: 'string', enum: ['high', 'medium', 'low'] },
-            title: { type: 'string', description: 'Short, specific.' },
+            title: { type: 'string', description: 'Short, specific, states the finding. Must agree with the detail.' },
             detail: { type: 'string', description: 'What each document says and why it matters, 1-3 sentences.' },
             action: { type: 'string', description: 'What the lawyer should check or do next.' },
             refs: { type: 'array', items: REF },
           },
-          required: ['severity', 'title', 'detail', 'refs'],
+          required: ['kind', 'severity', 'title', 'detail', 'refs'],
         },
       },
       summary: { type: 'string', description: '2-3 sentences: what this file is and the main things the lawyer must look at.' },
@@ -108,6 +116,14 @@ function verifyRefs(refs, docs) {
     const quote = String(r.quote || '').slice(0, 300);
     return { doc: doc?.id || String(r.doc || ''), quote, verified: !!doc && norm(quote).length >= 4 && norm(doc.text).includes(norm(quote)) };
   });
+}
+
+/** One finding as the page gets it. A "check" is a point to consider, so it never carries the top severity. */
+export function finding(x, docs) {
+  const kind = x.kind === 'check' ? 'check' : 'mismatch';
+  let severity = ['high', 'medium', 'low'].includes(x.severity) ? x.severity : 'medium';
+  if (kind === 'check' && severity === 'high') severity = 'medium';
+  return { kind, severity, title: String(x.title || ''), detail: String(x.detail || ''), action: String(x.action || ''), refs: verifyRefs(x.refs, docs) };
 }
 
 /** Strict tool use: every object closed, every property required, so a tool call always has the full shape. */
@@ -184,7 +200,7 @@ export default async function handler(req, res) {
     const started = Date.now();
     let out, issues, fields;
     for (let attempt = 0; attempt < 2; attempt++) {
-      out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
+      out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה בין המסמכים, ובנפרד נקודות שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
       issues = list(out.issues).filter((x) => x && typeof x === 'object');
       fields = list(out.fields).filter((f) => f && typeof f === 'object');
       if (issues.length || fields.length || Date.now() - started > 20000) break;
@@ -198,9 +214,8 @@ export default async function handler(req, res) {
       summary: String(out.summary || ''),
       partial: !!out.truncated,
       fields: fields.slice(0, 20).map((f) => ({ label: String(f.label || ''), value: String(f.value || ''), refs: verifyRefs(f.refs, docs) })),
-      issues: issues.slice(0, 15)
-        .map((x) => ({ severity: ['high', 'medium', 'low'].includes(x.severity) ? x.severity : 'medium', title: String(x.title || ''), detail: String(x.detail || ''), action: String(x.action || ''), refs: verifyRefs(x.refs, docs) }))
-        .sort((a, b) => order[a.severity] - order[b.severity]),
+      issues: issues.slice(0, 15).map((x) => finding(x, docs))
+        .sort((a, b) => (a.kind === b.kind ? order[a.severity] - order[b.severity] : a.kind === 'mismatch' ? -1 : 1)),
     });
   } catch (e) {
     console.error('legal api error:', e.message);
