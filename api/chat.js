@@ -5,6 +5,7 @@
 //                                      for that kind of business does. Booking requests become a card only.
 // Needs ANTHROPIC_API_KEY (and GMAIL_USER / GMAIL_APP_PASSWORD for real enquiries) in the Vercel project.
 import nodemailer from 'nodemailer';
+import { failure } from './_errors.js';
 
 const MODEL = process.env.CHAT_MODEL || 'claude-haiku-5-5';            // demo businesses
 const MODEL_BUILDLAB = process.env.CHAT_MODEL_BUILDLAB || 'claude-sonnet-5-5'; // real visitors talking about Amir's work
@@ -204,6 +205,6 @@ export default async function handler(req, res) {
     res.status(200).json({ reply: 'Done.', card });
   } catch (e) {
     console.error('chat api error:', e.message);
-    res.status(502).json({ error: 'The assistant is resting for a moment. Please try again.', detail: String(e.message || '').slice(0, 200) });
+    res.status(502).json(failure(e, { unavailable: 'The assistant is unavailable right now. Please try again later.', retry: 'The assistant is resting for a moment. Please try again.' }));
   }
 }

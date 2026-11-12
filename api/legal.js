@@ -5,6 +5,8 @@
 // each ref gets verified: true/false, so the page can show which items are backed by the file.
 // Needs ANTHROPIC_API_KEY in the Vercel project.
 
+import { failure } from './_errors.js';
+
 export const config = { maxDuration: 60 }; // a full review takes ~20-40s
 
 const MODEL = process.env.LEGAL_MODEL || 'claude-sonnet-5-5';
@@ -159,6 +161,6 @@ export default async function handler(req, res) {
     });
   } catch (e) {
     console.error('legal api error:', e.message);
-    res.status(502).json({ error: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.', detail: String(e.message || '').slice(0, 200) });
+    res.status(502).json(failure(e, { unavailable: 'הדמו אינו זמין כרגע. נסו שוב מאוחר יותר.', retry: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.' }));
   }
 }
