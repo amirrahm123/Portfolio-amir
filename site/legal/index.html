@@ -309,13 +309,16 @@ footer .wrap{display:flex;justify-content:space-between;padding:18px 28px;gap:12
   function renderResult(secs) {
     const r = result, all = [...r.fields.flatMap((f) => f.refs), ...r.issues.flatMap((i) => i.refs)];
     const ok = all.filter((x) => x.verified).length;
+    const card = (i) => `<div class="issue ${i.severity}"><div class="t"><span class="sev ${i.severity}">${SEV[i.severity]}</span><b>${esc(i.title)}</b></div><p>${esc(i.detail)}</p>${i.action ? `<p class="act">${esc(i.action)}</p>` : ''}${refsHtml(i.refs)}</div>`;
+    const mism = r.issues.filter((i) => i.kind !== 'check'), checks = r.issues.filter((i) => i.kind === 'check');
     $('start').hidden = true; $('out').hidden = false;
     $('out').innerHTML = `
       <div class="summary"><b>סיכום · ${Math.round(secs)} שניות · ${ok}/${all.length} מקורות אומתו במסמכים</b>${esc(r.summary)}</div>
       <div>
-        <div class="sec-h"><h3>דגלים לבדיקה</h3><span class="muted">${r.issues.length} ממצאים, החשובים קודם</span></div>
+        <div class="sec-h"><h3>אי-התאמות בין המסמכים</h3><span class="muted">${mism.length ? mism.length + ' נמצאו, החמורות קודם' : 'לא נמצאו'}</span></div>
         ${r.partial ? '<p class="muted">הסקירה נקטעה לפני הסוף, וייתכן שחסרים בה פרטים. אפשר לבדוק שוב.</p>' : ''}
-        ${r.issues.map((i) => `<div class="issue ${i.severity}"><div class="t"><span class="sev ${i.severity}">${SEV[i.severity]}</span><b>${esc(i.title)}</b></div><p>${esc(i.detail)}</p>${i.action ? `<p class="act">${esc(i.action)}</p>` : ''}${refsHtml(i.refs)}</div>`).join('') || '<p class="muted">לא נמצאו אי-התאמות.</p>'}
+        ${mism.map(card).join('') || '<p class="muted">המסמכים עקביים זה עם זה: לא נמצאה סתירה בפרטי הנכס, בזהות הצדדים, בסכומים או בתאריכים.</p>'}
+        ${checks.length ? `<div class="sec-h"><h3>נקודות לבדיקה</h3><span class="muted">${checks.length} נקודות לשיקול דעתו של עורך הדין</span></div>${checks.map(card).join('')}` : ''}
       </div>
       <div>
         <div class="sec-h"><h3>נתונים מרכזיים</h3><span class="muted">לחצו על מקור כדי לראות אותו במסמך</span></div>

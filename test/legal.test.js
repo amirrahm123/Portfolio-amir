@@ -136,3 +136,13 @@ test('if the API rejects the strict tool, the plain tool is used', async () => {
   const r = await call(handler, { action: 'ask', docs, question: 'מה המחיר?' }, fresh());
   assert.equal(r.code, 200); assert.equal(r.answer, 'x'); assert.equal(calls.length, 2); assert.equal(calls[1].tools[0].strict, undefined);
 });
+
+test('findings: mismatches come first, and a point to check never carries the top severity', async () => {
+  const { finding } = await import('../api/legal.js');
+  assert.deepEqual(finding({ kind: 'check', severity: 'high', title: 't' }, []), { kind: 'check', severity: 'medium', title: 't', detail: '', action: '', refs: [] });
+  assert.equal(finding({ severity: 'high' }, []).kind, 'mismatch'); // older replies without a kind
+  const sorted = [{ kind: 'check', severity: 'medium' }, { kind: 'mismatch', severity: 'low' }, { kind: 'mismatch', severity: 'high' }]
+    .map((x) => finding(x, []))
+    .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'mismatch' ? -1 : 1));
+  assert.deepEqual(sorted.map((x) => x.kind), ['mismatch', 'mismatch', 'check']);
+});
