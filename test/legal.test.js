@@ -112,3 +112,27 @@ test('lists sent as JSON strings are read, unreadable findings are an error', as
   fakeClaude(() => tool({ summary: 's', issues: 'נמצאו כמה בעיות', fields: [] }));
   assert.equal((await call(handler, { action: 'review', docs }, fresh())).code, 502);
 });
+
+test('a summary-only reply is asked again, and the tool is sent as strict', async () => {
+  const { strictSchema } = await import('../api/legal.js');
+  const full = { summary: 's', issues: [{ severity: 'high', title: 'a', detail: 'b', action: 'c', refs: [] }], fields: [{ label: 'מחיר', value: '1', refs: [] }] };
+  let n = 0;
+  const calls = fakeClaude(() => tool(n++ === 0 ? { summary: 'נמצאו אי-התאמות מהותיות' } : full));
+  const r = await call(handler, { action: 'review', docs }, fresh());
+  assert.equal(r.code, 200); assert.equal(r.issues.length, 1); assert.equal(calls.length, 2);
+  const t = calls[0].tools[0];
+  assert.equal(t.strict, true); assert.equal(t.input_schema.additionalProperties, false);
+  assert.deepEqual(t.input_schema.required.sort(), ['fields', 'issues', 'summary']);
+  assert.equal(t.input_schema.properties.issues.items.additionalProperties, false);
+  assert.equal(strictSchema({ type: 'string' }).type, 'string');
+
+  // two empty replies in a row: an error, never "no discrepancies found"
+  fakeClaude(() => tool({ summary: 'נמצאו אי-התאמות מהותיות' }));
+  assert.equal((await call(handler, { action: 'review', docs }, fresh())).code, 502);
+});
+
+test('if the API rejects the strict tool, the plain tool is used', async () => {
+  const calls = fakeClaude((body) => (body.tools[0].strict ? { __error: 400, message: 'strict schema not supported' } : tool({ answer: 'x', refs: [] })));
+  const r = await call(handler, { action: 'ask', docs, question: 'מה המחיר?' }, fresh());
+  assert.equal(r.code, 200); assert.equal(r.answer, 'x'); assert.equal(calls.length, 2); assert.equal(calls[1].tools[0].strict, undefined);
+});

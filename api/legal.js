@@ -110,8 +110,19 @@ function verifyRefs(refs, docs) {
   });
 }
 
+/** Strict tool use: every object closed, every property required, so a tool call always has the full shape. */
+export function strictSchema(s) {
+  if (!s || typeof s !== 'object') return s;
+  if (s.type === 'object' && s.properties) {
+    const properties = Object.fromEntries(Object.entries(s.properties).map(([k, v]) => [k, strictSchema(v)]));
+    return { ...s, properties, required: Object.keys(properties), additionalProperties: false };
+  }
+  if (s.type === 'array' && s.items) return { ...s, items: strictSchema(s.items) };
+  return s;
+}
+
 async function claude(system, user, tool, maxTokens) {
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
+  const send = (strict) => fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
     body: JSON.stringify({
@@ -121,11 +132,14 @@ async function claude(system, user, tool, maxTokens) {
       // the review ran out of room before it reached the findings. This is its lowest thinking setting.
       ...(/^claude-sonnet-5-5/.test(MODEL) ? { thinking: { type: 'between_tools' } } : {}),
       system,
-      tools: [tool],
-      // this model doesn't accept a forced tool_choice: ask for the tool in the prompt instead
+      // This model doesn't accept a forced tool_choice. Strict tool use is what guarantees the shape:
+      // without it the model sometimes sent only the summary, or a list as a string.
+      tools: [strict ? { ...tool, strict: true, input_schema: strictSchema(tool.input_schema) } : tool],
       messages: [{ role: 'user', content: `${user}\n\nReturn your result by calling the ${tool.name} tool (only that, no other text).` }],
     }),
   });
+  let r = await send(true);
+  if (r.status === 400) r = await send(false); // schema not accepted as strict: fall back to the plain tool
   const j = await r.json();
   if (!r.ok) throw new Error(j?.error?.message || `Claude ${r.status}`);
   const use = (j.content || []).find((b) => b.type === 'tool_use');
@@ -165,10 +179,17 @@ export default async function handler(req, res) {
       const out = await claude(SYSTEM, `${file}\n\nשאלת עורך הדין: ${q}`, ASK_TOOL, 900);
       return res.status(200).json({ answer: String(out.answer || ''), refs: verifyRefs(out.refs, docs) });
     }
-    const out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
-    // A cut-off review with no findings must never read as "no discrepancies found".
-    const issues = list(out.issues).filter((x) => x && typeof x === 'object');
-    const fields = list(out.fields).filter((f) => f && typeof f === 'object');
+    // A real file always has key data. A reply with neither findings nor data is a failed reply:
+    // ask once more if there is time left, and never show it as "no discrepancies".
+    const started = Date.now();
+    let out, issues, fields;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
+      issues = list(out.issues).filter((x) => x && typeof x === 'object');
+      fields = list(out.fields).filter((f) => f && typeof f === 'object');
+      if (issues.length || fields.length || Date.now() - started > 20000) break;
+    }
+    if (!issues.length && !fields.length) throw new Error(out.truncated ? 'review cut off before the findings' : 'review came back empty');
     if (out.truncated && !issues.length) throw new Error('review cut off before the findings');
     // findings were sent in a form that can't be read: an error, never "no discrepancies"
     if (!issues.length && out.issues != null && !Array.isArray(out.issues)) throw new Error('findings came back unreadable');
