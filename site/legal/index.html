@@ -314,6 +314,7 @@ footer .wrap{display:flex;justify-content:space-between;padding:18px 28px;gap:12
       <div class="summary"><b>סיכום · ${Math.round(secs)} שניות · ${ok}/${all.length} מקורות אומתו במסמכים</b>${esc(r.summary)}</div>
       <div>
         <div class="sec-h"><h3>דגלים לבדיקה</h3><span class="muted">${r.issues.length} ממצאים, החשובים קודם</span></div>
+        ${r.partial ? '<p class="muted">הסקירה נקטעה לפני הסוף, וייתכן שחסרים בה פרטים. אפשר לבדוק שוב.</p>' : ''}
         ${r.issues.map((i) => `<div class="issue ${i.severity}"><div class="t"><span class="sev ${i.severity}">${SEV[i.severity]}</span><b>${esc(i.title)}</b></div><p>${esc(i.detail)}</p>${i.action ? `<p class="act">${esc(i.action)}</p>` : ''}${refsHtml(i.refs)}</div>`).join('') || '<p class="muted">לא נמצאו אי-התאמות.</p>'}
       </div>
       <div>
