@@ -106,6 +106,9 @@ async function claude(system, user, tool, maxTokens) {
     body: JSON.stringify({
       model: MODEL,
       max_tokens: maxTokens,
+      // Sonnet 5.5 thinks before answering by default, and that thinking counts against max_tokens:
+      // the review ran out of room before it reached the findings. This is its lowest thinking setting.
+      ...(/^claude-sonnet-5-5/.test(MODEL) ? { thinking: { type: 'between_tools' } } : {}),
       system,
       tools: [tool],
       // this model doesn't accept a forced tool_choice: ask for the tool in the prompt instead
