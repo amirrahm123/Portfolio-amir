@@ -68,4 +68,7 @@ test('an API failure returns a friendly message plus the real reason', async () 
   fakeClaude(() => ({ __error: 400, message: 'model not found' }));
   const r = await call(handler, { mode: 'buildlab', messages: [user('hi')] }, fresh());
   assert.equal(r.code, 502); assert.match(r.detail, /model not found/);
+  fakeClaude(() => ({ __error: 401, message: 'invalid x-api-key' }));
+  const k = await call(handler, { mode: 'buildlab', messages: [user('hi')] }, fresh());
+  assert.equal(k.code, 502); assert.equal(k.detail, undefined); assert.match(k.error, /unavailable/);
 });

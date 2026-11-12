@@ -5,6 +5,8 @@
 // each ref gets verified: true/false, so the page can show which items are backed by the file.
 // Needs ANTHROPIC_API_KEY in the Vercel project.
 
+import { failure } from './_errors.js';
+
 export const config = { maxDuration: 60 }; // a full review takes ~20-40s
 
 const MODEL = process.env.LEGAL_MODEL || 'claude-sonnet-5-5';
@@ -23,7 +25,7 @@ Rules:
 
 const REF = {
   type: 'object',
-  properties: { doc: { type: 'string', description: 'Document id' }, quote: { type: 'string', description: 'Exact quote, 3-20 words' } },
+  properties: { doc: { type: 'string', description: 'Document id' }, quote: { type: 'string', description: 'Exact quote, 3-12 words' } },
   required: ['doc', 'quote'],
 };
 
@@ -33,23 +35,9 @@ const REVIEW_TOOL = {
   input_schema: {
     type: 'object',
     properties: {
-      summary: { type: 'string', description: '2-3 sentences: what this file is and the main things the lawyer must look at.' },
-      fields: {
-        type: 'array',
-        description: 'The key data of the file (8-14 items): parties and IDs, property identifiers, price, payments, dates, liens, attachments, etc.',
-        items: {
-          type: 'object',
-          properties: {
-            label: { type: 'string' },
-            value: { type: 'string' },
-            refs: { type: 'array', items: REF },
-          },
-          required: ['label', 'value', 'refs'],
-        },
-      },
       issues: {
         type: 'array',
-        description: 'Discrepancies, risks and missing items for the lawyer, most important first.',
+        description: 'Discrepancies, risks and missing items for the lawyer, most important first. Write these FIRST. At most 2 sources per item.',
         items: {
           type: 'object',
           properties: {
@@ -60,6 +48,20 @@ const REVIEW_TOOL = {
             refs: { type: 'array', items: REF },
           },
           required: ['severity', 'title', 'detail', 'refs'],
+        },
+      },
+      summary: { type: 'string', description: '2-3 sentences: what this file is and the main things the lawyer must look at.' },
+      fields: {
+        type: 'array',
+        description: 'The key data of the file (6-10 items, one source each): parties and IDs, property identifiers, price, payments, dates, liens.',
+        items: {
+          type: 'object',
+          properties: {
+            label: { type: 'string' },
+            value: { type: 'string' },
+            refs: { type: 'array', items: REF },
+          },
+          required: ['label', 'value', 'refs'],
         },
       },
     },
@@ -113,7 +115,8 @@ async function claude(system, user, tool, maxTokens) {
   const j = await r.json();
   if (!r.ok) throw new Error(j?.error?.message || `Claude ${r.status}`);
   const use = (j.content || []).find((b) => b.type === 'tool_use');
-  if (use) return use.input;
+  // cut off by max_tokens: the tool input is incomplete (later keys are simply missing)
+  if (use) return j.stop_reason === 'max_tokens' ? { ...use.input, truncated: true } : use.input;
   // fallback: the model answered in text; take the JSON object out of it
   const text = (j.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
   const m = text.match(/\{[\s\S]*\}/);
@@ -148,10 +151,13 @@ export default async function handler(req, res) {
       const out = await claude(SYSTEM, `${file}\n\nשאלת עורך הדין: ${q}`, ASK_TOOL, 900);
       return res.status(200).json({ answer: String(out.answer || ''), refs: verifyRefs(out.refs, docs) });
     }
-    const out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 4000);
+    const out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
+    // A cut-off review with no findings must never read as "no discrepancies found".
+    if (out.truncated && !(out.issues || []).length) throw new Error('review cut off before the findings');
     const order = { high: 0, medium: 1, low: 2 };
     res.status(200).json({
       summary: String(out.summary || ''),
+      partial: !!out.truncated,
       fields: (out.fields || []).slice(0, 20).map((f) => ({ label: String(f.label || ''), value: String(f.value || ''), refs: verifyRefs(f.refs, docs) })),
       issues: (out.issues || []).slice(0, 15)
         .map((x) => ({ severity: ['high', 'medium', 'low'].includes(x.severity) ? x.severity : 'medium', title: String(x.title || ''), detail: String(x.detail || ''), action: String(x.action || ''), refs: verifyRefs(x.refs, docs) }))
@@ -159,6 +165,6 @@ export default async function handler(req, res) {
     });
   } catch (e) {
     console.error('legal api error:', e.message);
-    res.status(502).json({ error: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.', detail: String(e.message || '').slice(0, 200) });
+    res.status(502).json(failure(e, { unavailable: 'הדמו אינו זמין כרגע. נסו שוב מאוחר יותר.', retry: 'הבדיקה לא הצליחה כרגע. נסו שוב בעוד רגע.' }));
   }
 }

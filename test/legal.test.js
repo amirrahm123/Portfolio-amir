@@ -73,6 +73,16 @@ test('input limits and errors', async () => {
   fakeClaude(() => ({ __error: 400, message: 'bad request from Claude' }));
   const e = await call(handler, { action: 'review', docs }, fresh());
   assert.equal(e.code, 502); assert.match(e.detail, /bad request from Claude/, 'the real reason is shown');
+  // cut off by max_tokens before any finding: an error, never "no discrepancies"
+  fakeClaude(() => ({ stop_reason: 'max_tokens', content: [{ type: 'tool_use', id: 't', name: 'file_review', input: { summary: 'נמצאו אי-התאמות' } }] }));
+  const cut = await call(handler, { action: 'review', docs }, fresh());
+  assert.equal(cut.code, 502);
+  fakeClaude(() => ({ stop_reason: 'max_tokens', content: [{ type: 'tool_use', id: 't', name: 'file_review', input: { issues: [{ severity: 'high', title: 'a', detail: 'b', refs: [] }] } }] }));
+  const part = await call(handler, { action: 'review', docs }, fresh());
+  assert.equal(part.code, 200); assert.equal(part.partial, true); assert.equal(part.issues.length, 1);
+  fakeClaude(() => ({ __error: 400, message: 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.' }));
+  const c = await call(handler, { action: 'review', docs }, fresh());
+  assert.equal(c.code, 502); assert.equal(c.detail, undefined, 'account problems are not shown to visitors'); assert.match(c.error, /אינו זמין/);
 });
 
 test('rate limit: 20 requests per IP per 10 minutes', async () => {
