@@ -6,7 +6,7 @@ import { call, fakeClaude } from './helpers.js';
 process.env.ANTHROPIC_API_KEY = 'test';
 globalThis.window = {};
 await import('../site/legal/samples.js');
-const { default: handler, norm } = await import('../api/legal.js');
+const { default: handler, norm, list } = await import('../api/legal.js');
 const docs = window.SAMPLES.map(({ id, name, text }) => ({ id, name, text }));
 const tool = (input) => ({ content: [{ type: 'tool_use', name: 'x', input }] });
 let ip = 0; const fresh = () => ({ ip: `10.1.0.${++ip}` }); // separate rate-limit bucket per test
@@ -97,4 +97,18 @@ test('the request turns off up-front thinking and never forces a tool', async ()
   await call(handler, { action: 'ask', docs, question: 'מה המחיר?' }, fresh());
   assert.deepEqual(calls[0].thinking, { type: 'between_tools' });
   assert.equal(calls[0].tool_choice, undefined);
+});
+
+test('lists sent as JSON strings are read, unreadable findings are an error', async () => {
+  assert.deepEqual(list('[{"a":1}]'), [{ a: 1 }]);
+  assert.deepEqual(list('here: [{"a":1}] done'), [{ a: 1 }]);
+  assert.deepEqual(list({ a: 1 }), [{ a: 1 }]);
+  assert.deepEqual(list('nothing'), []); assert.deepEqual(list(undefined), []);
+  const issue = { severity: 'high', title: 'תת-חלקה שונה', detail: 'd', refs: JSON.stringify([{ doc: 'tabu', quote: 'תת חלקה: 8' }]) };
+  fakeClaude(() => tool({ summary: 's', issues: JSON.stringify([issue]), fields: JSON.stringify([{ label: 'מחיר', value: '1,850,000', refs: [] }]) }));
+  const r = await call(handler, { action: 'review', docs }, fresh());
+  assert.equal(r.code, 200); assert.equal(r.issues.length, 1); assert.equal(r.fields.length, 1);
+  assert.equal(r.issues[0].refs[0].verified, true);
+  fakeClaude(() => tool({ summary: 's', issues: 'נמצאו כמה בעיות', fields: [] }));
+  assert.equal((await call(handler, { action: 'review', docs }, fresh())).code, 502);
 });

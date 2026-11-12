@@ -91,8 +91,19 @@ export function norm(s) {
     .toLowerCase();
 }
 
+/** The model sometimes sends a list as a JSON string (or a single object) instead of an array. */
+export function list(x) {
+  if (Array.isArray(x)) return x;
+  if (typeof x === 'string') {
+    const m = x.match(/\[[\s\S]*\]/);
+    if (m) { try { const v = JSON.parse(m[0]); if (Array.isArray(v)) return v; } catch { /* not a JSON list */ } }
+    return [];
+  }
+  return x && typeof x === 'object' ? [x] : [];
+}
+
 function verifyRefs(refs, docs) {
-  return (Array.isArray(refs) ? refs : []).slice(0, 4).map((r) => {
+  return list(refs).filter((r) => r && typeof r === 'object').slice(0, 4).map((r) => {
     const doc = docs.find((d) => d.id === r.doc) || docs.find((d) => norm(d.text).includes(norm(r.quote)));
     const quote = String(r.quote || '').slice(0, 300);
     return { doc: doc?.id || String(r.doc || ''), quote, verified: !!doc && norm(quote).length >= 4 && norm(doc.text).includes(norm(quote)) };
@@ -156,13 +167,17 @@ export default async function handler(req, res) {
     }
     const out = await claude(SYSTEM, `${file}\n\nבצע סקירה מלאה של התיק: חלץ את הנתונים המרכזיים, הצלב בין המסמכים, וסמן כל אי-התאמה, סיכון או פרט חסר שעורך הדין צריך לבדוק.`, REVIEW_TOOL, 6500);
     // A cut-off review with no findings must never read as "no discrepancies found".
-    if (out.truncated && !(out.issues || []).length) throw new Error('review cut off before the findings');
+    const issues = list(out.issues).filter((x) => x && typeof x === 'object');
+    const fields = list(out.fields).filter((f) => f && typeof f === 'object');
+    if (out.truncated && !issues.length) throw new Error('review cut off before the findings');
+    // findings were sent in a form that can't be read: an error, never "no discrepancies"
+    if (!issues.length && out.issues != null && !Array.isArray(out.issues)) throw new Error('findings came back unreadable');
     const order = { high: 0, medium: 1, low: 2 };
     res.status(200).json({
       summary: String(out.summary || ''),
       partial: !!out.truncated,
-      fields: (out.fields || []).slice(0, 20).map((f) => ({ label: String(f.label || ''), value: String(f.value || ''), refs: verifyRefs(f.refs, docs) })),
-      issues: (out.issues || []).slice(0, 15)
+      fields: fields.slice(0, 20).map((f) => ({ label: String(f.label || ''), value: String(f.value || ''), refs: verifyRefs(f.refs, docs) })),
+      issues: issues.slice(0, 15)
         .map((x) => ({ severity: ['high', 'medium', 'low'].includes(x.severity) ? x.severity : 'medium', title: String(x.title || ''), detail: String(x.detail || ''), action: String(x.action || ''), refs: verifyRefs(x.refs, docs) }))
         .sort((a, b) => order[a.severity] - order[b.severity]),
     });
