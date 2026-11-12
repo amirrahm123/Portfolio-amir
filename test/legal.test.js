@@ -91,3 +91,10 @@ test('rate limit: 20 requests per IP per 10 minutes', async () => {
   for (let i = 0; i < 20; i++) assert.equal((await call(handler, { action: 'ask', docs, question: 'q' }, who)).code, 200);
   assert.equal((await call(handler, { action: 'ask', docs, question: 'q' }, who)).code, 429);
 });
+
+test('the request turns off up-front thinking and never forces a tool', async () => {
+  const calls = fakeClaude(() => tool({ answer: 'x', refs: [] }));
+  await call(handler, { action: 'ask', docs, question: 'מה המחיר?' }, fresh());
+  assert.deepEqual(calls[0].thinking, { type: 'between_tools' });
+  assert.equal(calls[0].tool_choice, undefined);
+});
