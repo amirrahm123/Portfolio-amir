@@ -613,8 +613,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </div>
         <div>
           <div class="frame film">
-            <video id="hoopVid" playsinline muted preload="none" poster="/media/hoopassist-poster.webp" width="1280" height="720" aria-label="HoopAssist, 80 second explainer"></video>
-            <button class="play" id="hoopPlay" type="button" aria-label="Play the HoopAssist explainer"><span>&#9654; Watch how it works (1:20)</span></button>
+            <video id="hoopVid" playsinline preload="none" poster="/media/hoopassist-poster.webp" width="1280" height="720" aria-label="HoopAssist, 65 second explainer"></video>
+            <button class="play" id="hoopPlay" type="button" aria-label="Play the HoopAssist explainer"><span>&#9654; Watch how it works (1:05)</span></button>
           </div>
         </div>
         <div class="cards" dir="rtl" lang="he">
@@ -942,7 +942,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   var hv = document.getElementById('hoopVid'), hp = document.getElementById('hoopPlay');
   if (hv && hp) {
     hp.addEventListener('click', function () {
-      if (!hv.getAttribute('src')) hv.setAttribute('src', '/media/hoopassist.mp4');
+      if (!hv.getAttribute('src')) hv.setAttribute('src', document.documentElement.lang === 'he' ? '/media/hoopassist-he.mp4' : '/media/hoopassist.mp4');
       hv.controls = true; hp.classList.add('hide'); hv.play();
     });
     hv.addEventListener('ended', function () { hv.controls = false; hp.classList.remove('hide'); hv.load(); });

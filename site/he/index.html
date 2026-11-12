@@ -635,8 +635,8 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
         </div>
         <div>
           <div class="frame film">
-            <video id="hoopVid" playsinline muted preload="none" poster="/media/hoopassist-poster.webp" width="1280" height="720" aria-label="HoopAssist, סרטון הסבר של 80 שניות"></video>
-            <button class="play" id="hoopPlay" type="button" aria-label="הפעלת סרטון ההסבר"><span>&#9654; צפו איך זה עובד (1:20)</span></button>
+            <video id="hoopVid" playsinline preload="none" poster="/media/hoopassist-poster.webp" width="1280" height="720" aria-label="HoopAssist, סרטון הסבר של 65 שניות"></video>
+            <button class="play" id="hoopPlay" type="button" aria-label="הפעלת סרטון ההסבר"><span>&#9654; צפו איך זה עובד (1:05)</span></button>
           </div>
         </div>
         <div class="cards" dir="rtl" lang="he">
@@ -964,7 +964,7 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
   var hv = document.getElementById('hoopVid'), hp = document.getElementById('hoopPlay');
   if (hv && hp) {
     hp.addEventListener('click', function () {
-      if (!hv.getAttribute('src')) hv.setAttribute('src', '/media/hoopassist.mp4');
+      if (!hv.getAttribute('src')) hv.setAttribute('src', document.documentElement.lang === 'he' ? '/media/hoopassist-he.mp4' : '/media/hoopassist.mp4');
       hv.controls = true; hp.classList.add('hide'); hv.play();
     });
     hv.addEventListener('ended', function () { hv.controls = false; hp.classList.remove('hide'); hv.load(); });
