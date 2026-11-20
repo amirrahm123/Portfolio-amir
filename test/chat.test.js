@@ -20,7 +20,7 @@ test('model per mode: Sonnet for real visitors, Haiku for demos', async () => {
   assert.equal(calls[0].model, 'claude-sonnet-5-5');
   assert.equal(calls[1].model, 'claude-haiku-5-5');
   assert.match(calls[0].system, /אמיר רם/, 'Hebrew spelling of Amir’s name is in the prompt');
-  assert.match(calls[1].system, /Lindenhof/);
+  assert.match(calls[1].system, /Carmel Private Clinic/);
 });
 
 test('unknown mode falls back to Amir’s assistant; greeting-only history is rejected', async () => {

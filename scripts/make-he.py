@@ -22,8 +22,8 @@ def rep(a, b, count=1):
 rep('<html lang="en">', '<html lang="he" dir="rtl">')
 rep('<title>Amir Rahm – Websites for law firms, clinics and event venues</title>', '<title>אמיר רם – אתרים למשרדי עורכי דין, קליניקות וגני אירועים</title>')
 rep('<meta property="og:title" content="Amir Rahm – Websites for law firms, clinics and event venues">', '<meta property="og:title" content="אמיר רם – אתרים למשרדי עורכי דין, קליניקות וגני אירועים">')
-rep('<meta name="description" content="Amir Rahm designs and builds websites for law firms, private clinics and event venues in Israel and Germany.">',
-    '<meta name="description" content="אמיר רם מעצב ובונה אתרים, מערכות וכלי AI למשרדי עורכי דין, קליניקות פרטיות וגני אירועים בישראל ובגרמניה.">')
+rep('<meta name="description" content="Amir Rahm designs and builds websites for law firms, private clinics and event venues in Israel.">',
+    '<meta name="description" content="אמיר רם מעצב ובונה אתרים, מערכות וכלי AI למשרדי עורכי דין, קליניקות פרטיות וגני אירועים בישראל.">')
 rep('family=Heebo:wght@400;500;700', 'family=Heebo:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500')
 rep('<a class="lang-sw" href="/he/" lang="he" hreflang="he">עברית</a>', '<a class="lang-sw" href="/" lang="en" hreflang="en">English</a>')
 
@@ -67,14 +67,13 @@ for en, he in ATTR.items():
 rep("'Amir Rahm'.split('')", "'אמיר רם'.split('')")
 rep("{ url: 'ebeker.co.il', img: '/img/eb.webp', name: 'Eran Beker Law Firm', kind: 'Live client site' }", "{ url: 'ebeker.co.il', img: '/img/eb.webp', name: 'משרד עורכי הדין ערן בקר', kind: 'אתר לקוח באוויר' }")
 rep("{ url: 'sandrine-events.com', img: '/img/sd.webp', name: 'Achuzat Sandrine', kind: 'Live client site' }", "{ url: 'sandrine-events.com', img: '/img/sd.webp', name: 'אחוזת סנדרין', kind: 'אתר לקוח באוויר' }")
-rep("{ url: 'clinic-demo.vercel.app', img: '/img/cl.webp', name: 'Private clinic, Munich', kind: 'Concept' }", "{ url: 'clinic-demo.vercel.app', img: '/img/cl.webp', name: 'קליניקה פרטית, מינכן', kind: 'קונספט' }")
 i, j = s.index('  var COPY = {'), s.index('  };', s.index('  var COPY = {')) + 4
 s = s[:i] + '''  var COPY = {
     law: { kick: 'משרד עורכי דין ב{city}', head: 'ליווי משפטי מנוסה, כשזה הכי חשוב.', sub: '{name} מייצג לקוחות פרטיים ועסקים ב{city} והסביבה. דברו עם עורך דין עוד היום.', n1: 'אודות', n2: 'תחומי עיסוק', pill: 'ייעוץ ראשוני', c1: 'קביעת פגישת ייעוץ', c2: 'התקשרו למשרד', fallback: 'כהן את לוי' },
     clinic: { kick: 'קליניקה פרטית ב{city}', head: 'טיפול של מומחים, בלי חדר המתנה.', sub: 'מצאו את הרופא המתאים ב{name} וקבעו תור אונליין בפחות מדקה.', n1: 'מחלקות', n2: 'הרופאים שלנו', pill: 'קביעת תור', c1: 'קביעת תור', c2: 'מצאו מומחה', fallback: 'מרכז רפואי כרמל' },
     venue: { kick: 'גן אירועים ב{city}', head: 'היום שתזכרו, במקום שתאהבו.', sub: 'חתונות ואירועים פרטיים ב{name}. בואו לראות את המקום מקרוב.', n1: 'המקום', n2: 'גלריה', pill: 'תיאום סיור', c1: 'תיאום סיור', c2: 'לגלריה', fallback: 'אחוזת עץ הזית' }
   };''' + s[j:]
-rep("(sector === 'clinic' ? 'Munich' : 'Haifa')", "(sector === 'clinic' ? 'מינכן' : 'חיפה')")
+rep("cityIn.value.trim() || 'Haifa';", "cityIn.value.trim() || 'חיפה';")
 rep("document.getElementById('fType').value = 'A free homepage concept';", "document.getElementById('fType').value = 'הדמיה חינמית לעמוד הבית';")
 rep("var label = { law: 'law firm', clinic: 'private clinic', venue: 'event venue' }[sector];", "var label = { law: 'משרד עורכי דין', clinic: 'קליניקה פרטית', venue: 'גן אירועים' }[sector];")
 rep("if (!msg.value) msg.value = 'Hi Amir, I run a ' + label + (cityIn.value.trim() ? ' in ' + cityIn.value.trim() : '') + ' and would like a free homepage concept.';",
@@ -96,9 +95,9 @@ s = s[:i] + '''  const MODES = {
     law: { name: 'משרד עו״ד כהן את לוי', av: 'כל', url: 'cohen-levi.co.il',
       hello: 'שלום, הגעתם למשרד כהן את לוי. איך אפשר לעזור? אפשר לשאול על תחומי העיסוק שלנו או לקבוע שיחת היכרות חינמית של 20 דקות עם עורך דין.',
       chips: ['אני בהליך גירושים, מי יכול לעזור?', 'אתם מטפלים ברכישת דירה?', 'יש לי שאלה על ירושה', 'לקבוע שיחת היכרות'] },
-    clinic: { name: 'מרפאת לינדנהוף', av: 'ל', url: 'lindenhof-praxis.de',
-      hello: 'ברוכים הבאים למרפאת לינדנהוף. ספרו לי במה אתם צריכים עזרה ואמצא לכם את המחלקה המתאימה, או אקבע לכם תור.',
-      chips: ['כואבת לי הברך אחרי ריצה', 'אתם מקבלים ביטוח ציבורי?', 'Sprechen Sie Englisch?', 'לקבוע תור'] },
+    clinic: { name: 'מרפאת הכרמל', av: 'מכ', url: 'carmel-clinic.co.il',
+      hello: 'ברוכים הבאים למרפאת הכרמל. ספרו לי במה אתם צריכים עזרה ואמצא לכם את המחלקה המתאימה, או אקבע לכם תור.',
+      chips: ['כואבת לי הברך אחרי ריצה', 'אתם עובדים עם ביטוח משלים?', 'Do you speak English?', 'לקבוע תור'] },
     venue: { name: 'אחוזת עץ הזית', av: 'עז', url: 'olivegrove-estate.co.il',
       hello: 'ברוכים הבאים לאחוזת עץ הזית! מתכננים חתונה או אירוע? אשמח לספר על המקום או לתאם לכם סיור.',
       chips: ['כמה אורחים אפשר להושיב?', 'הקייטרינג כשר?', 'כמה עולה חתונה אצלכם?', 'לתאם סיור'] },
