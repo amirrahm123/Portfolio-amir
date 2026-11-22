@@ -20,6 +20,8 @@ def rep(a, b, count=1):
 
 # ---- document ----
 rep('<html lang="en">', '<html lang="he" dir="rtl">')
+rep('<meta property="og:url" content="https://www.amirrahm.dev/">', '<meta property="og:url" content="https://www.amirrahm.dev/he/">')
+rep('<link rel="canonical" href="https://www.amirrahm.dev/">', '<link rel="canonical" href="https://www.amirrahm.dev/he/">')
 rep('<title>Amir Rahm – AI solutions developer</title>', '<title>אמיר רם – מפתח פתרונות AI</title>')
 rep('<meta property="og:title" content="Amir Rahm – AI solutions developer">', '<meta property="og:title" content="אמיר רם – מפתח פתרונות AI">')
 rep('<meta name="description" content="Amir Rahm builds AI agents, automations and full-stack web products. Live demos, client work and code.">',
