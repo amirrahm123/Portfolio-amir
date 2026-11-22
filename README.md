@@ -1,12 +1,11 @@
 # Amir Rahm – portfolio
 
-Static one-page portfolio (`site/`) plus two Vercel functions:
+Static one-page developer portfolio (`site/`) plus two Vercel functions:
 
-- `api/contact.js` – the contact form (emails the enquiry to Amir).
-- `api/chat.js` – the live AI assistant in the "When a website isn't enough" section and behind the floating "Ask my AI assistant" button.
-  - **Amir's assistant** answers about his work and, with the visitor's OK, emails their enquiry to Amir.
-  - **Law firm / private clinic / event venue** are demos for fictional businesses: they answer questions and take appointment requests, shown as a card ("what the office receives"); nothing is sent.
-  - Models: `claude-sonnet-5-5` for Amir's assistant (`CHAT_MODEL_BUILDLAB`), `claude-haiku-5-5` for the demos (`CHAT_MODEL`). Limits: 600 characters per message, 30 messages per chat, 40 messages per IP per 10 minutes, 500 output tokens.
+- `api/legal.js` – the live "Deal File Checker" document-AI demo (see below).
+- `api/contact.js` – contact endpoint (emails an enquiry to Amir). The page currently links to email, WhatsApp, LinkedIn and GitHub directly and does not use it.
+
+The page is aimed at employers: AI and automation projects first, then client and full-stack work, about and contact. `site/Amir_Rahm_CV.pdf` is the CV linked from the hero and the contact section.
 
 Pages:
 
@@ -19,13 +18,13 @@ Vercel environment variables:
 
 | Variable | Used by |
 | --- | --- |
-| `ANTHROPIC_API_KEY` | the assistant |
-| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | contact form and assistant enquiries |
+| `ANTHROPIC_API_KEY` | the document-AI demo |
+| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | contact endpoint |
 
 `npm run build` copies `site/` to `dist/`, which Vercel serves. The previous React version lives on the `legacy-v1` branch.
 
 Tests (run on every push by GitHub Actions, `.github/workflows/ci.yml`):
 
-- `npm test` – unit and API tests with a fake Claude (`test/`): quote verification, review/ask flows, limits, rate limits, chat modes, booking vs. enquiry email.
-- `npm run test:e2e` – a real browser clicks through `/`, `/he/` and `/legal/` on desktop and phone (`e2e/`), with the AI faked: no sideways scrolling, no broken assets or JS errors, chat booking card, legal review → highlight → ask. Locally: `CHROME_PATH=/path/to/chrome npm run test:e2e`.
+- `npm test` – unit and API tests with a fake Claude (`test/`): quote verification, review/ask flows, limits, rate limits.
+- `npm run test:e2e` – a real browser clicks through `/`, `/he/` and `/legal/` on desktop and phone (`e2e/`), with the AI faked: no sideways scrolling, no broken assets or JS errors, legal review → highlight → ask. Locally: `CHROME_PATH=/path/to/chrome npm run test:e2e`.
 - `python3 scripts/make-he.py --check` – fails if the Hebrew page is out of date with the English one.

@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>אמיר רם – אתרים למשרדי עורכי דין, קליניקות וגני אירועים</title>
-<meta property="og:title" content="אמיר רם – אתרים למשרדי עורכי דין, קליניקות וגני אירועים">
+<title>אמיר רם – מפתח פתרונות AI</title>
+<meta property="og:title" content="אמיר רם – מפתח פתרונות AI">
 <meta property="og:image" content="/img/eb.webp">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" hreflang="he" href="/he/">
 <link rel="alternate" hreflang="en" href="/">
-<meta name="description" content="אמיר רם מעצב ובונה אתרים, מערכות וכלי AI למשרדי עורכי דין, קליניקות פרטיות וגני אירועים בישראל.">
+<meta name="description" content="אמיר רם בונה סוכני AI, אוטומציות ומוצרי ווב מקצה לקצה. דמואים חיים, עבודות ללקוחות וקוד.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&family=Heebo:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px}
 h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.012em;margin:0}
 p{margin:0}
-.just{text-align:justify;hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+.just{text-align:start}
 .dark{background:var(--ink);color:var(--porcelain)}
 .dark .muted{color:var(--mist)}
 .muted{color:var(--stone)}
@@ -213,11 +213,6 @@ a.frame:hover::after,a.frame:focus-visible::after{opacity:1;transform:none}
 .site.law .pill,.site.law .s-ctas span:first-child{background:#c9a84c;color:#0d1a33}
 .site.law .s-ctas span:last-child{border:1px solid rgba(242,237,226,.4)}
 .site.law .art{background:linear-gradient(160deg,#1c2f55,#0f1f3d);border:1px solid rgba(201,168,76,.45);border-radius:6px}
-.site.clinic{background:#f4f7f8;color:#13303a}
-.site.clinic h4{font-family:var(--sans);font-weight:500;letter-spacing:-.02em}
-.site.clinic .pill,.site.clinic .s-ctas span:first-child{background:#1f6f78;color:#fff}
-.site.clinic .s-ctas span:last-child{border:1px solid rgba(19,48,58,.25)}
-.site.clinic .art{background:linear-gradient(170deg,#cfe3e5,#9cc5c9)}
 .site.venue{background:#14261f;color:#efe6d2}
 .site.venue h4,.site.venue .logo{font-family:var(--serif);font-style:italic}
 .site.venue .pill,.site.venue .s-ctas span:first-child{background:#d9c08a;color:#14261f}
@@ -363,6 +358,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   .site .body{max-width:100%}
   .site .art{display:none}
 }
+.contact .actions{margin-top:32px}
+.contact .direct{margin-top:0;align-content:center}
 
 /* ---- Hebrew / RTL ---- */
 :root{--serif:"Frank Ruhl Libre",Georgia,serif;--sans:"Heebo",system-ui,sans-serif}
@@ -371,19 +368,13 @@ h1,h2,h3{letter-spacing:0}
 .brand{margin-right:0;margin-left:auto}
 .hero .builder{margin-right:0;margin-left:-40px}
 @media (max-width:1300px){.hero .builder{margin-left:0}}
-.b-frame,.frame .bar,.mock .bar{direction:ltr}
+.b-frame,.frame .bar{direction:ltr}
 .b-caption{direction:rtl}
 .b-dots{right:auto;left:0}
-.site .logo{margin-right:0;margin-left:auto}
-.site .art{right:auto;left:6%}
 .case.rv li{transform:translateX(10px)}
 .case-phone{right:auto;left:-2%}
 @media (max-width:1240px){.case-phone{left:0}}
 a.frame::after{content:"לאתר החי";right:auto;left:14px}
-.msg.bot{border-bottom-left-radius:16px;border-bottom-right-radius:5px}
-.msg.me{border-bottom-right-radius:16px;border-bottom-left-radius:5px}
-.ask-ai{right:auto;left:20px}
-@media (max-width:900px){.ask-ai{left:14px}}
 .just{text-align:right}
 </style>
 </head>
@@ -401,7 +392,7 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
   <div class="mark">
     <div class="name" id="introName"></div>
     <div class="rule"></div>
-    <p class="sub">אתרים למשרדי עורכי דין, קליניקות וגני אירועים</p>
+    <p class="sub">מפתח פתרונות AI</p>
   </div>
 </div>
 
@@ -409,9 +400,8 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
   <div class="wrap">
     <a class="brand" href="#">אמיר רם</a>
     <nav class="nav" aria-label="ראשי">
-      <a href="#work">עבודות</a>
-      <a href="#try">העמוד שלכם</a>
-      <a href="#software">מערכות ו-AI</a>
+      <a href="#projects">פרויקטים</a>
+      <a href="#work">עבודות ללקוחות</a>
       <a href="#about">אודות</a>
     </nav>
     <a class="lang-sw" href="/" lang="en" hreflang="en">English</a>
@@ -423,11 +413,11 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
   <section class="hero dark">
     <div class="wrap">
       <div>
-        <h1 class="reveal-1">אתרים שזוכים באמון הלקוח עוד לפני השיחה הראשונה.</h1>
-        <p class="lede muted reveal-2">אני אמיר. אני מעצב ובונה אתרים למשרדי עורכי דין, קליניקות פרטיות וגני אירועים בישראל, כדי שמי שמחפש אתכם ימצא אתכם, יסמוך עליכם ויפנה אליכם.</p>
+        <h1 class="reveal-1">סוכני AI ואוטומציות, מקצה לקצה.</h1>
+        <p class="lede muted reveal-2">אני אמיר, מפתח מצפון הארץ. אני לוקח צורך עסקי מרעיון ראשוני ועד מערכת שעובדת: AI למסמכים, תהליכי אוטומציה ומוצרי ווב מלאים, שנבנו עבור לקוחות אמיתיים.</p>
         <div class="actions reveal-3">
-          <a class="btn btn-brass" href="#try">ראו איך העמוד שלכם יכול להיראות</a>
-          <a class="btn btn-line" href="#work">לעבודות שלי</a>
+          <a class="btn btn-brass" href="#projects">לפרויקטים</a>
+          <a class="btn btn-line" href="/Amir_Rahm_CV.pdf" target="_blank" rel="noopener">הורדת קורות חיים</a>
         </div>
       </div>
       <div class="builder reveal-4" aria-hidden="true">
@@ -449,155 +439,46 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
     </div>
   </section>
 
-  <section class="block" id="work">
+  <section class="block" id="projects">
     <div class="wrap">
       <div class="head rv">
-        <h2>עבודות ללקוחות</h2>
-        <p class="muted just">שני האתרים באוויר ומשמשים כל יום את העסקים שעבורם נבנו. עבדתי ישירות מול הבעלים, מהטיוטה הראשונה ועד העלייה לאוויר.</p>
+        <h2>פרויקטי AI ואוטומציה</h2>
+        <p class="muted just">מערכות שתכננתי ובניתי מקצה לקצה. הראשונה היא דמו חי שאפשר לנסות, ולשלישית יש סרטון קצר שמראה איך היא עובדת.</p>
       </div>
-
-      <article class="case rv">
-        <div>
-          <h3>משרד עורכי הדין ערן בקר</h3>
-          <p class="where muted">נזיקין וביטוח, נהריה</p>
-          <p class="brief just">משרד מוביל בתחום הנזיקין שעבר מאתר Wix ישן. המשרד היה צריך אתר שמשקף את המעמד שלו ומאפשר לנפגעים להגיע לעורך דין במהירות, מכל טלפון.</p>
-          <ul>
-            <li>כ-30 עמודים שמכסים 15 תחומי עיסוק</li>
-            <li>החשיפה של המשרד בטלוויזיה ובעיתונות כבר בעמוד הבית</li>
-            <li>טופס פנייה שמגיע ישר למשרד</li>
-            <li>וואטסאפ וחיוג בלחיצה בכל מסך</li>
-            <li>רכיב נגישות והצהרת נגישות, כנדרש בחוק</li>
-          </ul>
-          <div class="links"><a class="btn btn-ink" href="https://ebeker.co.il" target="_blank" rel="noopener">לאתר ebeker.co.il</a></div>
-        </div>
-        <div class="shots">
-          <a class="frame" href="https://ebeker.co.il" target="_blank" rel="noopener" aria-label="פתיחת ebeker.co.il"><div class="bar"><i></i><i></i><i></i><span>ebeker.co.il</span></div><img src="/img/eb.webp" alt="עמוד הבית של אתר משרד ערן בקר"></a>
-          <a class="frame second" href="https://ebeker.co.il/#areas" target="_blank" rel="noopener" aria-label="פתיחת תחומי העיסוק באתר ebeker.co.il"><div class="bar"><i></i><i></i><i></i><span>ebeker.co.il</span></div><img src="/img/eb2.webp" alt="תחומי העיסוק באתר משרד ערן בקר"></a>
-        </div>
-      </article>
-
-      <article class="case rv">
-        <div>
-          <h3>אחוזת סנדרין</h3>
-          <p class="where muted">אחוזה לחתונות ואירועים, רגבה</p>
-          <p class="brief just">אחוזה של 50 דונם שמארחת חתונות ואירועי חברה. האתר היה צריך להרגיש מיוחד כמו המקום עצמו ולהפוך גולשים לסיורים שנקבעו.</p>
-          <ul>
-            <li>גלריה של עשרה אלבומים מאירועים אמיתיים</li>
-            <li>כל פנייה נשמרת לפני שהיא נשלחת במייל, כך שאף ליד לא הולך לאיבוד</li>
-            <li>סינון לידים ומערכת ניהול פשוטה לצוות</li>
-            <li>תיאום בוואטסאפ מכל עמוד</li>
-          </ul>
-          <div class="links"><a class="btn btn-ink" href="https://www.sandrine-events.com" target="_blank" rel="noopener">לאתר sandrine-events.com</a></div>
-        </div>
-        <div class="shots">
-          <a class="frame" href="https://www.sandrine-events.com" target="_blank" rel="noopener" aria-label="פתיחת sandrine-events.com"><div class="bar"><i></i><i></i><i></i><span>sandrine-events.com</span></div><img src="/img/sd.webp" alt="עמוד הבית של אתר אחוזת סנדרין"></a>
-          <a class="frame second" href="https://www.sandrine-events.com" target="_blank" rel="noopener" aria-label="פתיחת sandrine-events.com"><div class="bar"><i></i><i></i><i></i><span>sandrine-events.com</span></div><img src="/img/sd2.webp" alt="האחוזה באתר סנדרין"></a>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <section class="block dark" id="try">
-    <div class="wrap config">
-      <div class="rv">
-        <h2>ראו מאיפה העמוד שלכם יכול להתחיל.</h2>
-        <p class="lede muted just">כתבו את שם העסק ובחרו את התחום. זו רק סקיצה. הקונספט האמיתי שאשלח לכם מעוצב סביב העסק, התמונות והלקוחות שלכם.</p>
-        <div class="fields">
-          <div class="fld">
-            <label for="bizName">שם העסק</label>
-            <input id="bizName" type="text" placeholder="משרד עו״ד כהן את לוי" maxlength="48" autocomplete="organization">
-          </div>
-          <div class="fld">
-            <label for="bizCity">עיר</label>
-            <input id="bizCity" type="text" placeholder="חיפה" maxlength="28">
-          </div>
-          <div class="fld">
-            <label id="sectorLabel">התחום</label>
-            <div class="seg" role="group" aria-labelledby="sectorLabel">
-              <button type="button" data-sector="law" aria-pressed="true">משרד עורכי דין</button>
-              <button type="button" data-sector="clinic" aria-pressed="false">קליניקה פרטית</button>
-              <button type="button" data-sector="venue" aria-pressed="false">גן אירועים</button>
-            </div>
-          </div>
-        </div>
-        <div class="cta"><a class="btn btn-brass" href="#contact" id="sendSketch">בקשו את הקונספט האמיתי</a></div>
-      </div>
-      <div class="mock rv" aria-live="polite">
-        <div class="bar"><i></i><i></i><i></i><span id="mockUrl">cohen-levi.co.il</span></div>
-        <div class="site law" id="site">
-          <nav><span class="logo swap" id="mLogo">כהן את לוי</span><span class="swap" id="mNav1">אודות</span><span class="swap" id="mNav2">תחומי עיסוק</span><span class="pill swap" id="mPill">ייעוץ ראשוני</span></nav>
-          <div class="body">
-            <p class="kick swap" id="mKick">משרד עורכי דין בחיפה</p>
-            <h4 class="swap" id="mHead">ליווי משפטי מנוסה, כשזה הכי חשוב.</h4>
-            <p class="s-sub swap" id="mSub">כהן את לוי מייצג לקוחות פרטיים ועסקים בחיפה ובצפון. דברו עם עורך דין עוד היום.</p>
-            <div class="s-ctas"><span class="swap" id="mCta1">קביעת פגישת ייעוץ</span><span class="swap" id="mCta2">התקשרו למשרד</span></div>
-          </div>
-          <div class="art" aria-hidden="true"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="software">
-    <div class="wrap">
-      <div class="head rv">
-        <h2>כשאתר זה לא מספיק</h2>
-        <p class="muted just">יש עסקים שצריכים מערכת מאחורי האתר: זימון תורים, מערכות ניהול, או כלים שמשתמשים ב-AI כדי לחסוך לצוות שעות עבודה. את כל מה שכאן בניתי מקצה לקצה.</p>
-      </div>
-
-      <article class="case rv ai" id="assistant">
-        <div>
-          <span class="tag">דמו חי, נסו בעצמכם</span>
-          <h3>עוזר AI שמכיר את העסק שלכם</h3>
-          <p class="where muted">עונה ללקוחות ומקבל בקשות לפגישה, יום ולילה</p>
-          <p class="brief just">העוזר הזה אמיתי ועונה בזמן אמת. בחרו עסק ודברו איתו כמו לקוח: הוא מסביר על השירותים, מכוון לעורך הדין, לרופא או לרכזת המתאימים, והופך שאלה לבקשת פגישה שהצוות מקבל בוואטסאפ או במייל. שלושת העסקים בדויים. עוזר שנבנה עבורכם עובד עם השירותים, השעות והטון האמיתיים שלכם.</p>
-          <ul>
-            <li>עונה בעברית או באנגלית, בשפה של הפונה</li>
-            <li>אוסף שם, טלפון ושעה נוחה לחזרה</li>
-            <li>לא נותן ייעוץ משפטי או רפואי, אלא מכוון לאדם הנכון</li>
-            <li>יושב באתר שלכם או בוואטסאפ שלכם</li>
-          </ul>
-          <span class="seg-label" id="aiModeLabel">לדבר עם</span>
-          <div class="seg" role="group" aria-labelledby="aiModeLabel" id="aiModes">
-            <button type="button" data-mode="buildlab" aria-pressed="true">העוזר של אמיר</button>
-            <button type="button" data-mode="law" aria-pressed="false">משרד עורכי דין</button>
-            <button type="button" data-mode="clinic" aria-pressed="false">קליניקה פרטית</button>
-            <button type="button" data-mode="venue" aria-pressed="false">גן אירועים</button>
-          </div>
-        </div>
-        <div>
-          <div class="frame">
-            <div class="bar"><i></i><i></i><i></i><span id="aiUrl">amir-rahm.dev</span></div>
-            <div class="chat">
-              <div class="who"><span class="av" id="aiAv">AR</span><div><b id="aiName">העוזר של אמיר</b><small><i></i>מחובר · עוזר AI</small></div></div>
-              <div class="log" id="aiLog" aria-live="polite"></div>
-              <div class="chips" id="aiChips"></div>
-              <form id="aiForm" autocomplete="off">
-                <textarea id="aiInput" rows="1" maxlength="600" placeholder="כתבו הודעה…" aria-label="הודעה לעוזר"></textarea>
-                <button class="btn btn-brass" type="submit" id="aiSend">שליחה</button>
-              </form>
-            </div>
-          </div>
-          <p class="chat-note">AI אמיתי (Claude). השיחות לא נשמרות, ובעסקים לדוגמה שום דבר לא נשלח.</p>
-        </div>
-      </article>
 
       <article class="case rv">
         <div>
           <span class="tag">דמו חי, נסו בעצמכם</span>
-          <h3>AI למסמכים במשרדי עורכי דין</h3>
-          <p class="where muted">סוקר תיק עסקת נדל״ן בפחות מדקה (נתונים בדויים)</p>
+          <h3>בודק תיק עסקה: AI למסמכים לעורכי דין מקרקעין</h3>
+          <p class="where muted">בודק תיק עסקת מקרקעין בפחות מדקה (נתונים בדויים)</p>
           <p class="brief just">הסכם מכר, נסח טאבו ומכתב מהבנק: המסמכים שעורך דין מצליב שורה אחרי שורה לפני עסקת נדל״ן. ה-AI קורא אותם יחד, מחלץ את הנתונים החשובים עם ציטוט מדויק לכל פרט, ומסמן את מה שלא מסתדר: תת-חלקה אחרת, ספרות שהתחלפו בת.ז., הערת אזהרה לטובת צד שלישי שההסכם לא מזכיר, תשלומים שלא מסתכמים בתמורה. כל ציטוט נבדק מול המסמך לפני שהוא מוצג, ועורך הדין יכול לשאול את התיק שאלות בשפה חופשית.</p>
           <ul>
             <li>נתונים מרכזיים ודגלים אדומים, עם מקור לכל אחד שנבדק מול הטקסט</li>
             <li>לחיצה על מקור מסמנת אותו בתוך המסמך</li>
-            <li>אפשר לבנות אותו גם לחוזי שכירות, תיקי נזיקין או כל מסמך שחוזר על עצמו</li>
+            <li>גרסה שנייה מוסיפה מנוע כללים קבוע וסט בדיקות עם דפי תשובות, ונבדקה על נסח טאבו אמיתי</li>
           </ul>
           <div class="links"><a class="btn btn-ink" href="/legal/">לדמו</a></div>
         </div>
         <div class="shots">
           <a class="frame demo" href="/legal/" aria-label="פתיחת דמו ה-AI למסמכים"><div class="bar"><i></i><i></i><i></i><span>בדיקת תיק עסקה (דמו)</span></div><img src="/img/legal.webp" alt="דמו AI למסמכים: דגלים אדומים עם מקורות מאומתים ליד נסח הטאבו"></a>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div>
+          <span class="tag">אוטומציה</span>
+          <h3>מנוע לידים שרץ לפי לוח זמנים</h3>
+          <p class="where muted">סוכן AI ודשבורד מעקב</p>
+          <p class="brief just">נבנה עבור העבודה שלי כפרילנסר. בכל ריצה הוא מחפש עסקים ב-Google Maps, בודק כל אתר (בדיקה טכנית ועוד ביקורת עיצוב של AI על צילומי מסך אמיתיים), מאתר את פרטי הקשר וכותב הודעה אישית לכל עסק. דשבורד מלווה כל ליד דרך יצירת קשר, תזכורות מעקב ותשובות, ומייל קצר מפרט למי להתקשר היום.</p>
+          <ul>
+            <li>כ-30 לידים חדשים בכל ריצה</li>
+            <li>אתרים, מיילים וניידים נבדקים מול המקור, שום דבר לא מנוחש</li>
+            <li>תזכורת לפולו-אפ כל 3 ימים, עם הערות שיחה והיסטוריה</li>
+            <li>רץ לבד ב-GitHub Actions, ולוח הבקרה הוא עמוד פרטי</li>
+          </ul>
+        </div>
+        <div class="shots">
+          <div class="frame demo"><div class="bar"><i></i><i></i><i></i><span>לוח לידים (נתונים לדוגמה)</span></div><img src="/img/leads.webp" alt="לוח לידים עם תזכורות פולו-אפ, בנתונים לדוגמה"></div>
         </div>
       </article>
 
@@ -641,6 +522,77 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
           </div>
         </div>
       </article>
+    </div>
+  </section>
+
+  <section class="block dark" id="how">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>איך אני עובד</h2>
+        <p class="muted just">שלושה הרגלים שעומדים מאחורי כל פרויקט בעמוד הזה.</p>
+      </div>
+      <div class="sectors rv">
+        <div class="sector" style="border-color:var(--brass)">
+          <h3>מתחילים מהמשימה האמיתית</h3>
+          <p class="muted just">אני יושב עם מי שעושה את העבודה, רושם את השלבים שחוזרים על עצמם ובונה בשבילם. פרויקטי הלקוחות כאן נמסרו ישירות לבעלי העסקים.</p>
+        </div>
+        <div class="sector" style="border-color:var(--brass)">
+          <h3>בודקים את ה-AI</h3>
+          <p class="muted just">כל תשובה של AI במערכות האלה מגיעה עם מקור שנבדק בקוד, ואני מודד את התוצאות מול קובצי בדיקה עם תשובות ידועות לפני שאני סומך עליהן.</p>
+        </div>
+        <div class="sector" style="border-color:var(--brass)">
+          <h3>מהר, ובאחריות מלאה</h3>
+          <p class="muted just">אני בונה עם Claude Code ועם פריימוורקים מודרניים, וכך אדם אחד מעלה מוצר שלם בתוך ימים. העיצוב, צד השרת, האינטגרציות וההעלאה לאוויר כולם שלי.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>עבודות ללקוחות ופיתוח Full-Stack</h2>
+        <p class="muted just">שני אתרי לקוחות באוויר ומוצר לקביעת תורים. עבדתי ישירות מול הבעלים, מהטיוטה הראשונה ועד העלייה לאוויר.</p>
+      </div>
+
+      <article class="case rv">
+        <div>
+          <h3>משרד עורכי הדין ערן בקר</h3>
+          <p class="where muted">נזיקין וביטוח, נהריה</p>
+          <p class="brief just">משרד מוביל בתחום הנזיקין שעבר מאתר Wix ישן. המשרד היה צריך אתר שמשקף את המעמד שלו ומאפשר לנפגעים להגיע לעורך דין במהירות, מכל טלפון.</p>
+          <ul>
+            <li>כ-30 עמודים שמכסים 15 תחומי עיסוק</li>
+            <li>החשיפה של המשרד בטלוויזיה ובעיתונות כבר בעמוד הבית</li>
+            <li>טופס פנייה שמגיע ישר למשרד</li>
+            <li>וואטסאפ וחיוג בלחיצה בכל מסך</li>
+            <li>רכיב נגישות והצהרת נגישות, כנדרש בחוק</li>
+          </ul>
+          <div class="links"><a class="btn btn-ink" href="https://ebeker.co.il" target="_blank" rel="noopener">לאתר ebeker.co.il</a></div>
+        </div>
+        <div class="shots">
+          <a class="frame" href="https://ebeker.co.il" target="_blank" rel="noopener" aria-label="פתיחת ebeker.co.il"><div class="bar"><i></i><i></i><i></i><span>ebeker.co.il</span></div><img src="/img/eb.webp" alt="עמוד הבית של אתר משרד ערן בקר"></a>
+          <a class="frame second" href="https://ebeker.co.il/#areas" target="_blank" rel="noopener" aria-label="פתיחת תחומי העיסוק באתר ebeker.co.il"><div class="bar"><i></i><i></i><i></i><span>ebeker.co.il</span></div><img src="/img/eb2.webp" alt="תחומי העיסוק באתר משרד ערן בקר"></a>
+        </div>
+      </article>
+
+      <article class="case rv">
+        <div>
+          <h3>אחוזת סנדרין</h3>
+          <p class="where muted">אחוזה לחתונות ואירועים, רגבה</p>
+          <p class="brief just">אחוזה של 50 דונם שמארחת חתונות ואירועי חברה. האתר היה צריך להרגיש מיוחד כמו המקום עצמו ולהפוך גולשים לסיורים שנקבעו.</p>
+          <ul>
+            <li>גלריה של עשרה אלבומים מאירועים אמיתיים</li>
+            <li>כל פנייה נשמרת לפני שהיא נשלחת במייל, כך שאף ליד לא הולך לאיבוד</li>
+            <li>סינון לידים ומערכת ניהול פשוטה לצוות</li>
+            <li>תיאום בוואטסאפ מכל עמוד</li>
+          </ul>
+          <div class="links"><a class="btn btn-ink" href="https://www.sandrine-events.com" target="_blank" rel="noopener">לאתר sandrine-events.com</a></div>
+        </div>
+        <div class="shots">
+          <a class="frame" href="https://www.sandrine-events.com" target="_blank" rel="noopener" aria-label="פתיחת sandrine-events.com"><div class="bar"><i></i><i></i><i></i><span>sandrine-events.com</span></div><img src="/img/sd.webp" alt="עמוד הבית של אתר אחוזת סנדרין"></a>
+          <a class="frame second" href="https://www.sandrine-events.com" target="_blank" rel="noopener" aria-label="פתיחת sandrine-events.com"><div class="bar"><i></i><i></i><i></i><span>sandrine-events.com</span></div><img src="/img/sd2.webp" alt="האחוזה באתר סנדרין"></a>
+        </div>
+      </article>
 
       <article class="case rv">
         <div>
@@ -660,86 +612,20 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
         </div>
       </article>
 
-      <article class="case rv">
-        <div>
-          <span class="tag">אוטומציה</span>
-          <h3>מנוע לידים שרץ כל בוקר</h3>
-          <p class="where muted">סוכן AI ולוח פולו-אפ, בשימוש יומיומי</p>
-          <p class="brief just">בניתי אותו לעסק שלי, וזו בדיוק מערכת מהסוג שאני בונה למשרדים שטובעים בפניות ובפולו-אפים. כל בוקר הוא מחפש בגוגל מפות משרדי עורכי דין, קליניקות וגני אירועים, בודק כל אתר (בדיקה טכנית ובדיקת עיצוב של AI על צילומי מסך אמיתיים), מוצא פרטי קשר וכותב הודעה אישית לכל עסק. לוח בקרה מוביל כל ליד דרך פנייה, תזכורות לפולו-אפ ותשובות, ומייל קצר כל בוקר אומר למי להתקשר היום.</p>
-          <ul>
-            <li>כ-30 לידים חדשים ביום מכל הארץ</li>
-            <li>אתרים, מיילים וניידים נבדקים מול המקור, שום דבר לא מנוחש</li>
-            <li>תזכורת לפולו-אפ כל 3 ימים, עם הערות שיחה והיסטוריה</li>
-            <li>רץ לבד ב-GitHub Actions, ולוח הבקרה הוא עמוד פרטי</li>
-          </ul>
-        </div>
-        <div class="shots">
-          <div class="frame demo"><div class="bar"><i></i><i></i><i></i><span>לוח לידים (נתונים לדוגמה)</span></div><img src="/img/leads.webp" alt="לוח לידים עם תזכורות פולו-אפ, בנתונים לדוגמה"></div>
-        </div>
-      </article>
     </div>
   </section>
 
-  <section class="block dark">
-    <div class="wrap">
-      <div class="head rv">
-        <h2>למי אני בונה</h2>
-        <p class="muted just">אני מתמקד בשלושה סוגי עסקים. כל אחד מהם משיג לקוחות בדרך שלו, והאתר נבנה סביב זה.</p>
-      </div>
-      <div class="sectors rv">
-        <div class="sector" style="border-color:var(--brass)">
-          <h3>משרדי עורכי דין</h3>
-          <p class="muted just">לקוחות בוחרים עורך דין שהם סומכים עליו. האתר מציג בבירור את הניסיון ותחומי העיסוק, ומחבר אדם מודאג לעורך הדין הנכון, מהר.</p>
-        </div>
-        <div class="sector" style="border-color:var(--brass)">
-          <h3>קליניקות פרטיות</h3>
-          <p class="muted just">מטופלים רוצים להרגיש בידיים טובות ולקבוע תור בלי לחפש בטלפון. עיצוב רגוע, מחלקות ברורות וקביעת תור אונליין, בכמה שפות כשצריך.</p>
-        </div>
-        <div class="sector" style="border-color:var(--brass)">
-          <h3>גני אירועים</h3>
-          <p class="muted just">זוגות וחברות מחליטים עם העיניים. תמונות גדולות שנטענות מהר בכל טלפון, ודרך ישירה לתאם סיור.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="approach">
-    <div class="wrap">
-      <div class="head rv">
-        <h2>ראו את עמוד הבית החדש לפני שאתם מתחייבים.</h2>
-        <p class="muted just">ברוב הפרויקטים קודם חותמים ורק אחר כך רואים תוצאה. אני עובד הפוך.</p>
-      </div>
-      <div class="steps rv">
-        <div class="step">
-          <p class="when" style="color:var(--brass)">לפני שמחליטים</p>
-          <h3>הדמיה חינמית לעמוד הבית</h3>
-          <p class="muted just">אני מעצב גרסה ראשונה של עמוד הבית עם השם, השירותים והסגנון שלכם, בלי עלות. אם זה לא מתאים, אתם לא חייבים כלום.</p>
-        </div>
-        <div class="step">
-          <p class="when" style="color:var(--brass)">בערך ארבעה שבועות</p>
-          <h3>האתר המלא</h3>
-          <p class="muted just">כל עמוד נכתב ונבנה יחד איתכם, בעברית או באנגלית, נבדק בטלפונים ומחובר לוואטסאפ, למייל ולקביעת התורים שלכם.</p>
-        </div>
-        <div class="step">
-          <p class="when" style="color:var(--brass)">אחרי העלייה לאוויר</p>
-          <h3>תחזוקה ושינויים</h3>
-          <p class="muted just">הצוות שלכם מעדכן טקסטים ותמונות בעצמו. לכל דבר גדול יותר יש מסלול חודשי קטן שכולל עדכונים, אחסון וגיבויים.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="about" style="padding-top:0">
+  <section class="block" id="about">
     <div class="wrap about rv">
-      <h2>אדם אחד, מהסקיצה הראשונה ועד העלייה לאוויר.</h2>
+      <h2>מפתח אחד, מהסקיצה הראשונה ועד פרודקשן.</h2>
       <div class="text">
-        <p class="just">אני אמיר, מפתח Full-Stack מנהריה שבצפון הארץ. אתם מדברים ישירות עם מי שמעצב ובונה את האתר, בלי סוכנות באמצע.</p>
-        <p class="just">אני בונה עם כלים מודרניים, כולל AI, וזה שומר על פרויקטים מהירים ועל תקציב הוגן. מה שלא משתנה זו הקפדנות: כל עמוד נבדק בטלפונים אמיתיים לפני שהוא עולה לאוויר.</p>
+        <p class="just">אני אמיר, מפתח Full-Stack מנהריה. בשנה האחרונה אני מפעיל את BuildLab, סטודיו של אדם אחד, ובונה אתרים, אפליקציות ווב וכלי AI ישירות לבעלי עסקים.</p>
+        <p class="just">עכשיו אני מחפש תפקיד פיתוח בצוות שבונה מוצרי AI או אוטומציה. אפשר מצפון הארץ או מרחוק, ואני פתוח למעבר למרכז בשביל התפקיד הנכון.</p>
         <dl class="facts">
           <div><dt>מבוסס ב</dt><dd>נהריה, ישראל</dd></div>
           <div><dt>שפות</dt><dd>עברית ואנגלית</dd></div>
-          <div><dt>בונה עם</dt><dd>Next.js, React ו-TypeScript</dd></div>
-          <div><dt>אתרים ב</dt><dd>עברית ואנגלית</dd></div>
+          <div><dt>בונה עם</dt><dd>TypeScript, Next.js, React ו-Node</dd></div>
+          <div><dt>עבודה עם AI</dt><dd>Claude API ו-Gemini API, סוכנים, שליפת נתונים ממסמכים</dd></div>
         </dl>
       </div>
     </div>
@@ -748,44 +634,23 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
   <section class="block dark" id="contact">
     <div class="wrap contact">
       <div class="rv">
-        <h2>ספרו לי על העסק שלכם.</h2>
-        <p class="lede muted just">כתבו כמה שורות ואחזור אליכם תוך יום עבודה. אם תרצו הדמיה חינמית לעמוד הבית, צרפו את האתר הנוכחי או רק את שם העסק.</p>
-        <div class="direct">
-          <a href="mailto:amirrahm135@gmail.com"><span>amirrahm135@gmail.com</span><span>מייל</span></a>
-          <a href="https://wa.me/972527044989" target="_blank" rel="noopener"><span>+972 52 704 4989</span><span>וואטסאפ</span></a>
-          <a href="https://www.linkedin.com/in/amir-rahm-142b58311" target="_blank" rel="noopener"><span>אמיר רם</span><span>לינקדאין</span></a>
-        </div>
+        <h2>בואו נדבר.</h2>
+        <p class="lede muted just">אני מחפש תפקיד פיתוח. הדרך המהירה להגיע אליי היא מייל או וואטסאפ, ואני חוזר בתוך יום עבודה.</p>
+        <div class="actions"><a class="btn btn-brass" href="/Amir_Rahm_CV.pdf" target="_blank" rel="noopener">הורדת קורות חיים</a></div>
       </div>
-      <form class="ask rv" id="ask" novalidate>
-        <div class="row2">
-          <div><label for="fName">השם שלכם</label><input id="fName" name="name" autocomplete="name" required></div>
-          <div><label for="fBiz">העסק</label><input id="fBiz" name="business" autocomplete="organization"></div>
-        </div>
-        <div class="row2">
-          <div><label for="fEmail">מייל</label><input id="fEmail" name="email" type="email" autocomplete="email" required></div>
-          <div><label for="fPhone">טלפון (לא חובה)</label><input id="fPhone" name="phone" type="tel" autocomplete="tel"></div>
-        </div>
-        <div>
-          <label for="fType">במה אפשר לעזור?</label>
-          <select id="fType" name="topic">
-            <option>הדמיה חינמית לעמוד הבית</option>
-            <option>אתר חדש</option>
-            <option>מערכת או כלי AI</option>
-            <option>משהו אחר</option>
-          </select>
-        </div>
-        <div><label for="fMsg">הודעה</label><textarea id="fMsg" name="message" required></textarea></div>
-        <input class="hp" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="err" id="formErr" role="alert" hidden></p>
-        <div><button class="btn btn-brass" type="submit" id="sendBtn">שליחה</button></div>
-      </form>
+      <div class="direct rv">
+        <a href="mailto:amirrahm135@gmail.com"><span>amirrahm135@gmail.com</span><span>מייל</span></a>
+        <a href="https://wa.me/972527044989" target="_blank" rel="noopener"><span>+972 52 704 4989</span><span>וואטסאפ</span></a>
+        <a href="https://www.linkedin.com/in/amir-rahm-142b58311" target="_blank" rel="noopener"><span>אמיר רם</span><span>לינקדאין</span></a>
+        <a href="https://github.com/amirrahm123" target="_blank" rel="noopener"><span>amirrahm123</span><span>GitHub</span></a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="dark">
   <div class="wrap">
-    <span>אמיר רם, מפתח אתרים ומערכות</span>
+    <span>אמיר רם, מפתח</span>
     <span>נהריה, ישראל</span>
   </div>
 </footer>
@@ -837,6 +702,7 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
 
   /* ---------- hero: a homepage that builds itself ---------- */
   var SITES = [
+    { url: 'deal-file-checker/demo', img: '/img/legal.webp', name: 'בודק תיק עסקה', kind: 'AI למסמכים, דמו חי' },
     { url: 'ebeker.co.il', img: '/img/eb.webp', name: 'משרד עורכי הדין ערן בקר', kind: 'אתר לקוח באוויר' },
     { url: 'sandrine-events.com', img: '/img/sd.webp', name: 'אחוזת סנדרין', kind: 'אתר לקוח באוויר' }
   ];
@@ -894,52 +760,6 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
     setTimeout(function () { rvs.forEach(function (el) { el.classList.add('in'); }); }, 6000);
   } else rvs.forEach(function (el) { el.classList.add('in'); });
 
-  /* ---------- homepage sketch ---------- */
-  var COPY = {
-    law: { kick: 'משרד עורכי דין ב{city}', head: 'ליווי משפטי מנוסה, כשזה הכי חשוב.', sub: '{name} מייצג לקוחות פרטיים ועסקים ב{city} והסביבה. דברו עם עורך דין עוד היום.', n1: 'אודות', n2: 'תחומי עיסוק', pill: 'ייעוץ ראשוני', c1: 'קביעת פגישת ייעוץ', c2: 'התקשרו למשרד', fallback: 'כהן את לוי' },
-    clinic: { kick: 'קליניקה פרטית ב{city}', head: 'טיפול של מומחים, בלי חדר המתנה.', sub: 'מצאו את הרופא המתאים ב{name} וקבעו תור אונליין בפחות מדקה.', n1: 'מחלקות', n2: 'הרופאים שלנו', pill: 'קביעת תור', c1: 'קביעת תור', c2: 'מצאו מומחה', fallback: 'מרכז רפואי כרמל' },
-    venue: { kick: 'גן אירועים ב{city}', head: 'היום שתזכרו, במקום שתאהבו.', sub: 'חתונות ואירועים פרטיים ב{name}. בואו לראות את המקום מקרוב.', n1: 'המקום', n2: 'גלריה', pill: 'תיאום סיור', c1: 'תיאום סיור', c2: 'לגלריה', fallback: 'אחוזת עץ הזית' }
-  };
-  var sector = 'law';
-  var nameIn = document.getElementById('bizName'), cityIn = document.getElementById('bizCity');
-  var site = document.getElementById('site');
-  function shortName(n) { return n.replace(/\s+(law office|law firm|clinic|estate|events?)$/i, '') || n; }
-  function slug(n) { return (n.toLowerCase().replace(/&/g, '').replace(/[^a-z0-9֐-׿]+/g, '-').replace(/^-|-$/g, '') || 'your-business') + '.co.il'; }
-  function set(id, text) { var el = document.getElementById(id); if (el.textContent !== text) el.textContent = text; }
-  function render(animate) {
-    var swaps = site.querySelectorAll('.swap');
-    var apply = function () {
-      var c = COPY[sector];
-      var name = nameIn.value.trim() || c.fallback;
-      var city = cityIn.value.trim() || 'חיפה';
-      var f = function (t) { return t.replace(/\{name\}/g, name).replace(/\{city\}/g, city); };
-      site.className = 'site ' + sector;
-      set('mLogo', shortName(name)); set('mNav1', c.n1); set('mNav2', c.n2); set('mPill', c.pill);
-      set('mKick', f(c.kick)); set('mHead', c.head); set('mSub', f(c.sub)); set('mCta1', c.c1); set('mCta2', c.c2);
-      set('mockUrl', slug(shortName(name)));
-      swaps.forEach(function (s) { s.classList.remove('fading'); });
-    };
-    if (animate && !reduce) { swaps.forEach(function (s) { s.classList.add('fading'); }); setTimeout(apply, 220); } else apply();
-  }
-  document.querySelectorAll('[data-sector]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      sector = b.dataset.sector;
-      document.querySelectorAll('[data-sector]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      render(true);
-    });
-  });
-  nameIn.addEventListener('input', function () { render(false); });
-  cityIn.addEventListener('input', function () { render(false); });
-  render(false);
-  document.getElementById('sendSketch').addEventListener('click', function () {
-    var n = nameIn.value.trim();
-    if (n) document.getElementById('fBiz').value = n;
-    document.getElementById('fType').value = 'הדמיה חינמית לעמוד הבית';
-    var label = { law: 'משרד עורכי דין', clinic: 'קליניקה פרטית', venue: 'גן אירועים' }[sector];
-    var msg = document.getElementById('fMsg');
-    if (!msg.value) msg.value = 'היי אמיר, יש לי ' + label + (cityIn.value.trim() ? ' ב' + cityIn.value.trim() : '') + ' ואשמח להדמיה חינמית של עמוד הבית.';
-  });
-
   /* ---------- HoopAssist explainer ---------- */
   var hv = document.getElementById('hoopVid'), hp = document.getElementById('hoopPlay');
   if (hv && hp) {
@@ -949,146 +769,6 @@ a.frame::after{content:"לאתר החי";right:auto;left:14px}
     });
     hv.addEventListener('ended', function () { hv.controls = false; hp.classList.remove('hide'); hv.load(); });
   }
-
-  /* ---------- contact form ---------- */
-  var form = document.getElementById('ask'), err = document.getElementById('formErr'), sendBtn = document.getElementById('sendBtn');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var data = Object.fromEntries(new FormData(form));
-    var problem = !data.name.trim() ? 'נא להוסיף שם.' : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim()) ? 'נא להוסיף כתובת מייל תקינה כדי שאוכל לחזור אליכם.' : !data.message.trim() ? 'נא לכתוב הודעה קצרה.' : '';
-    if (problem) { err.textContent = problem; err.hidden = false; return; }
-    err.hidden = true; sendBtn.disabled = true; sendBtn.textContent = 'שולח…';
-    fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-      .then(function (r) { if (!r.ok) throw new Error(); })
-      .then(function () {
-        form.innerHTML = '<div class="sent"><h3>ההודעה נשלחה.</h3><p class="muted" style="margin-top:12px">תודה, ' + data.name.trim().split(' ')[0].replace(/[<>&]/g, '') + '. אחזור אליכם ל-' + data.email.trim().replace(/[<>&]/g, '') + ' תוך יום עבודה.</p></div>';
-      })
-      .catch(function () {
-        err.textContent = 'ההודעה לא נשלחה. אפשר לכתוב לי ל-amirrahm135@gmail.com או בוואטסאפ.';
-        err.hidden = false; sendBtn.disabled = false; sendBtn.textContent = 'שליחה';
-      });
-  });
-})();
-</script>
-<button class="ask-ai hide" id="askAi" type="button"><i></i>שאלו את עוזר ה-AI שלי</button>
-<script>
-(() => {
-  const MODES = {
-    buildlab: { name: 'העוזר של אמיר', av: 'אר', url: 'amir-rahm.dev',
-      hello: 'היי! אני העוזר של אמיר רם. אפשר לשאול אותי כל דבר על העבודה שלו, איך פרויקט מתנהל, או מה אתר או כלי AI יכולים לעשות לעסק שלכם.',
-      chips: ['איך מתנהל פרויקט?', 'כמה עולה אתר?', 'אפשר עוזר כזה גם לעסק שלי?', 'אני עורך דין, יש לי המון מסמכים'] },
-    law: { name: 'משרד עו״ד כהן את לוי', av: 'כל', url: 'cohen-levi.co.il',
-      hello: 'שלום, הגעתם למשרד כהן את לוי. איך אפשר לעזור? אפשר לשאול על תחומי העיסוק שלנו או לקבוע שיחת היכרות חינמית של 20 דקות עם עורך דין.',
-      chips: ['אני בהליך גירושים, מי יכול לעזור?', 'אתם מטפלים ברכישת דירה?', 'יש לי שאלה על ירושה', 'לקבוע שיחת היכרות'] },
-    clinic: { name: 'מרפאת הכרמל', av: 'מכ', url: 'carmel-clinic.co.il',
-      hello: 'ברוכים הבאים למרפאת הכרמל. ספרו לי במה אתם צריכים עזרה ואמצא לכם את המחלקה המתאימה, או אקבע לכם תור.',
-      chips: ['כואבת לי הברך אחרי ריצה', 'אתם עובדים עם ביטוח משלים?', 'Do you speak English?', 'לקבוע תור'] },
-    venue: { name: 'אחוזת עץ הזית', av: 'עז', url: 'olivegrove-estate.co.il',
-      hello: 'ברוכים הבאים לאחוזת עץ הזית! מתכננים חתונה או אירוע? אשמח לספר על המקום או לתאם לכם סיור.',
-      chips: ['כמה אורחים אפשר להושיב?', 'הקייטרינג כשר?', 'כמה עולה חתונה אצלכם?', 'לתאם סיור'] },
-  };
-  const $ = (id) => document.getElementById(id);
-  const log = $('aiLog'), input = $('aiInput'), form = $('aiForm'), chips = $('aiChips');
-  const chats = {}; // per mode: [{role, content}] + rendered cards
-  let mode = 'buildlab', busy = false;
-
-  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const fmt = (s) => esc(s)
-    .replace(/\*\*(.+?)\*\*/g, '$1')
-    .replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, (u) => `<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</a>`)
-    .replace(/\b([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})\b/gi, '<a href="mailto:$1">$1</a>')
-    .replace(/\n/g, '<br>');
-
-  function bubble(role, text, extra = '') {
-    const el = document.createElement('div');
-    el.className = `msg ${role === 'user' ? 'me' : 'bot'} ${extra}`;
-    el.dir = 'auto';
-    el.innerHTML = fmt(text);
-    log.appendChild(el);
-    log.scrollTop = log.scrollHeight;
-    return el;
-  }
-  function cardEl(c) {
-    const el = document.createElement('div');
-    el.className = 'req';
-    if (c.type === 'booking') {
-      const rows = [['שם', c.name], ['טלפון', c.phone], ['נושא', c.service], ['זמן מועדף', c.time], c.notes && ['הערות', c.notes]].filter(Boolean);
-      el.innerHTML = `<b>מה ${c.mode === 'venue' ? 'צוות האירועים' : c.mode === 'clinic' ? 'המרפאה' : 'המשרד'} מקבל</b><dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd dir="auto">${esc(v || '-')}</dd>`).join('')}</dl><p>דמו: שום דבר לא נשלח. בהתקנה אמיתית זה מגיע מיד לוואטסאפ או למייל של הצוות.</p>`;
-    } else {
-      el.innerHTML = `<b>נשלח לאמיר</b><p style="margin-top:0;color:inherit">ההודעה שלכם אצל אמיר במייל. הוא חוזר תוך יום עבודה.</p>`;
-    }
-    log.appendChild(el);
-    log.scrollTop = log.scrollHeight;
-  }
-  function renderChips() {
-    const asked = chats[mode].items.filter((m) => m.role === 'user');
-    const used = new Set(asked.map((m) => m.content));
-    // fewer suggestions once the conversation is going, none after a few messages
-    const rest = MODES[mode].chips.filter((c) => !used.has(c));
-    // the last suggestion is the call to action (book / ask about a project): it always stays
-    const list = asked.length >= 3 ? [] : asked.length ? [...new Set([rest.at(-1), rest[0]])].filter(Boolean) : rest.slice(0, 4);
-    chips.innerHTML = list.map((c) => `<button type="button" dir="auto">${esc(c)}</button>`).join('');
-  }
-  function show(m) {
-    mode = m;
-    const M = MODES[m];
-    $('aiName').textContent = M.name; $('aiAv').textContent = M.av; $('aiUrl').textContent = M.url;
-    document.querySelectorAll('#aiModes button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
-    chats[m] ||= { items: [{ role: 'assistant', content: M.hello }] };
-    log.innerHTML = '';
-    for (const it of chats[m].items) it.card ? cardEl(it.card) : bubble(it.role, it.content, it.err ? 'err' : '');
-    renderChips();
-    log.scrollTop = log.scrollHeight; // chips take space: keep the latest message in view
-  }
-  async function ask(text) {
-    text = text.trim();
-    if (!text || busy) return;
-    busy = true; $('aiSend').disabled = true;
-    const c = chats[mode], m = mode;
-    c.items.push({ role: 'user', content: text });
-    bubble('user', text);
-    input.value = ''; input.style.height = '';
-    chips.innerHTML = '';
-    const dots = document.createElement('div'); dots.className = 'msg bot typing'; dots.innerHTML = '<i></i><i></i><i></i>';
-    log.appendChild(dots); log.scrollTop = log.scrollHeight;
-    try {
-      const messages = c.items.filter((it) => !it.card && !it.err).map(({ role, content }) => ({ role, content }));
-      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: m, messages }) });
-      const data = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(data.error || 'משהו השתבש.');
-      if (data.card) c.items.push({ card: data.card });
-      c.items.push({ role: 'assistant', content: data.reply });
-    } catch (e) {
-      c.items.push({ role: 'assistant', content: e.message || 'משהו השתבש, נסו שוב.', err: true });
-    }
-    dots.remove();
-    if (mode === m) show(m);
-    busy = false; $('aiSend').disabled = false;
-    if (window.matchMedia('(min-width:901px)').matches) input.focus();
-  }
-
-  form.addEventListener('submit', (e) => { e.preventDefault(); ask(input.value); });
-  input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
-  input.addEventListener('input', () => { input.style.height = ''; input.style.height = Math.min(input.scrollHeight, 120) + 'px'; });
-  chips.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) ask(b.textContent); });
-  $('aiModes').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b && !busy) show(b.dataset.mode); });
-  show('buildlab');
-
-  // Floating button: everywhere except while the assistant (or the contact form) is on screen.
-  const btn = $('askAi'), sec = $('assistant'), contact = $('contact');
-  const seen = new Map();
-  const io = new IntersectionObserver((es) => {
-    es.forEach((x) => seen.set(x.target, x.isIntersecting));
-    const hero = window.scrollY < 300;
-    btn.classList.toggle('hide', hero || seen.get(sec) || seen.get(contact));
-  }, { threshold: 0.15 });
-  io.observe(sec); io.observe(contact);
-  window.addEventListener('scroll', () => { if (window.scrollY < 300) btn.classList.add('hide'); else if (!seen.get(sec) && !seen.get(contact)) btn.classList.remove('hide'); }, { passive: true });
-  btn.addEventListener('click', () => {
-    if (!busy) show('buildlab');
-    sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => input.focus({ preventScroll: true }), 600);
-  });
 })();
 </script>
 </body>

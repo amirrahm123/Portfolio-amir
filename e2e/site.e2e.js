@@ -12,11 +12,6 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '
 
 // Fake AI answers (the real APIs are tested in test/*.test.js)
 function fakeApi(url, body) {
-  if (url === '/api/chat') {
-    const q = body.messages.at(-1).content;
-    if (/book|לקבוע/i.test(q)) return { reply: 'Thanks! The team will call you to confirm.', card: { type: 'booking', mode: body.mode, name: 'Noa', phone: '050-1234567', service: 'Family law', time: 'Sunday', notes: '' } };
-    return { reply: 'This is exactly what Amir builds. Try the demo: https://portfolio-amirrahm.vercel.app/legal/' };
-  }
   if (url === '/api/legal') {
     if (body.action === 'ask') return { answer: 'המוכר משלם מס שבח.', refs: [{ doc: 'contract', quote: 'מס שבח, ככל שיחול, ישולם על ידי המוכר', verified: true }] };
     return {
@@ -60,7 +55,6 @@ async function open(url, device) {
   await page.evaluate(() => { try { sessionStorage.setItem('introSeen', '1'); } catch {} document.querySelectorAll('.rv').forEach((e) => e.classList.add('in')); });
   return { page, problems, close: () => ctx.close() };
 }
-const idle = (page) => page.waitForFunction(() => !document.querySelector('.typing') && !document.getElementById('aiSend')?.disabled);
 
 for (const [name, device] of [['desktop', DESK], ['phone', PHONE]]) {
   for (const url of ['/', '/he/', '/legal/']) {
@@ -79,35 +73,7 @@ test('Hebrew page: RTL, language switch, nothing left in English in the header',
   const { page, close } = await open('/he/', DESK);
   assert.equal(await page.getAttribute('html', 'dir'), 'rtl');
   assert.equal(await page.getAttribute('.lang-sw', 'href'), '/');
-  assert.equal((await page.textContent('h1')).trim().startsWith('אתרים'), true);
-  await close();
-});
-
-for (const [url, label] of [['/', 'English'], ['/he/', 'Hebrew']]) {
-  test(`${label} chat: a demo booking shows the card and the reply stays in view (phone)`, async () => {
-    const { page, problems, close } = await open(url, PHONE);
-    await page.locator('#assistant').scrollIntoViewIfNeeded();
-    await page.locator('#aiModes [data-mode=law]').click();
-    await page.fill('#aiInput', url === '/' ? 'Please book an intro call' : 'אני רוצה לקבוע שיחה');
-    await page.press('#aiInput', 'Enter');
-    await idle(page);
-    assert.equal(await page.locator('.req').count(), 1, 'booking card');
-    const visible = await page.evaluate(() => { const l = document.getElementById('aiLog'); return l.scrollTop + l.clientHeight >= l.scrollHeight - 2; });
-    assert.ok(visible, 'chat is scrolled to the latest message');
-    await page.locator('#aiModes [data-mode=buildlab]').click();
-    assert.equal(await page.locator('.req').count(), 0, 'each business keeps its own conversation');
-    assert.deepEqual(problems, []);
-    await close();
-  });
-}
-
-test('chat links read left-to-right inside Hebrew text', async () => {
-  const { page, close } = await open('/he/', PHONE);
-  await page.locator('#assistant').scrollIntoViewIfNeeded();
-  await page.fill('#aiInput', 'יש לי המון מסמכים'); await page.press('#aiInput', 'Enter'); await idle(page);
-  const a = page.locator('#aiLog .msg.bot a').last();
-  assert.equal(await a.textContent(), 'portfolio-amirrahm.vercel.app/legal');
-  assert.equal(await a.evaluate((e) => getComputedStyle(e).direction), 'ltr');
+  assert.equal((await page.textContent('h1')).trim().startsWith('סוכני AI'), true);
   await close();
 });
 
