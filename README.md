@@ -11,7 +11,7 @@ Pages:
 
 - `site/index.html` – English portfolio.
 - `site/he/index.html` – Hebrew (RTL) portfolio, **generated** from the English page: edit the English page, then run `python3 scripts/make-he.py` (texts in `scripts/he-texts.py`; the script reports anything left untranslated).
-- `site/legal/` – "בודק תיק עסקה": live document-AI demo for real-estate lawyers, served by `api/legal.js`. It reviews a fictional deal file (`site/legal/samples.js`: sale agreement, land registry extract, bank letter), extracts key data and red flags, and checks every quote against the document text before showing it (✓ verified / ⚠ not found). Visitors can also paste their own text and ask the file questions. Model `claude-sonnet-5-5` (`LEGAL_MODEL`), 20 requests per IP per 10 minutes.
+- `site/legal/` – "בודק תיק עסקה": live document-AI demo (a lighter version; the full pipeline with the rules engine and eval is in [deal-file-checker](https://github.com/amirrahm123/deal-file-checker)) for real-estate lawyers, served by `api/legal.js`. It reviews a fictional deal file (`site/legal/samples.js`: sale agreement, land registry extract, bank letter), extracts key data and red flags, and checks every quote against the document text before showing it (✓ verified / ⚠ not found). Visitors can also paste their own text and ask the file questions. Model `claude-sonnet-5-5` (`LEGAL_MODEL`), 20 requests per IP per 10 minutes.
   Planted issues in the sample file (to judge the AI): sub-parcel 7 vs 8, seller ID 034567891 vs 034567819, storage unit 3 vs 5, mortgage Leumi vs Mizrahi-Tefahot, an undisclosed third-party warning note, payments 1,825,000 vs price 1,850,000, area 104 vs 98.40 m², and a bank letter that expired before signing.
 
 Vercel environment variables:
